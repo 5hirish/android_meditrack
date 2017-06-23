@@ -3,13 +3,17 @@ package com.alleviate.meditrack;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import com.alleviate.meditrack.adapter.SectionsPagerAdapter;
+
 public class DashboardActivity extends AppCompatActivity {
 
-    private TextView mTextMessage;
+    private SectionsPagerAdapter mSectionsPagerAdapter;
+    private ViewPager mViewPager;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -17,14 +21,14 @@ public class DashboardActivity extends AppCompatActivity {
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
-                case R.id.navigation_home:
-                    mTextMessage.setText(R.string.title_today);
+                case R.id.navigation_today:
+                    mViewPager.setCurrentItem(0);
                     return true;
-                case R.id.navigation_dashboard:
-                    mTextMessage.setText(R.string.title_all);
+                case R.id.navigation_all:
+                    mViewPager.setCurrentItem(1);
                     return true;
-                case R.id.navigation_notifications:
-                    mTextMessage.setText(R.string.title_user);
+                case R.id.navigation_user:
+                    mViewPager.setCurrentItem(2);
                     return true;
             }
             return false;
@@ -37,7 +41,12 @@ public class DashboardActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
 
-        mTextMessage = (TextView) findViewById(R.id.message);
+        mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
+
+        // Set up the ViewPager with the sections adapter.
+        mViewPager = (ViewPager) findViewById(R.id.container_fragments);
+        mViewPager.setAdapter(mSectionsPagerAdapter);
+
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
     }

@@ -18,12 +18,7 @@
         </activity>
         <activity
             android:name=".DashboardActivity"
-            android:label="@string/title_activity_dashboard"
-            android:parentActivityName=".MainActivity">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.alleviate.meditrack.MainActivity" />
-        </activity>
+            android:label="@string/title_activity_dashboard"/>
     </application>
 
 </manifest>
