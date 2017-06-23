@@ -1,20 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".DashboardActivity">
 
     <item
-        android:id="@+id/all_search"
+        android:id="@+id/action_all_search"
         android:icon="@drawable/ic_search_24dp"
         android:title="@string/menu_search"
         android:orderInCategory="1"
-        app:showAsAction="ifRoom|collapseActionView"/>
-
-    <item
-        android:id="@+id/settings"
-        android:title="@string/menu_settings" />
-
-    <item
-        android:id="@+id/about"
-        android:title="@string/menu_about" />
+        app:showAsAction="always|collapseActionView"
+        app:actionViewClass="android.support.v7.widget.SearchView"/>
 
 </menu>
