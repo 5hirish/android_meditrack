@@ -8,6 +8,14 @@ package com.alleviate.meditrack.constants;
 
 public class Constants {
 
+
+    public static final int parent_alarm_id = 983735;       // DayMan Plus has 98XXXX series
+    public static final int reminder_alarm_id = 983736;
+    public static final int protocol_alarm_id = 983577;
+
+    public static final boolean debug_flag = true;
+
+
     public static final int num_tab = 3;
     public static final String tab_title_today = "Today";
     public static final String tab_title_all = "All";

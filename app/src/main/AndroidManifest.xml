@@ -40,6 +40,28 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.alleviate.meditrack.DashboardActivity" />
         </activity>
+
+        <receiver
+            android:name=".alarms.AlarmSetter"
+            android:enabled="true"
+            android:exported="false" />
+        <receiver
+            android:name=".alarms.AlarmRemind"
+            android:enabled="true"
+            android:exported="false" />
+        <receiver
+            android:name=".broadcast_receivers.BootReceiver"
+            android:enabled="true"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.QUICKBOOT_POWERON" />
+                <action android:name="android.intent.action.REBOOT" />
+                <action android:name="android.location.MODE_CHANGED" />
+                <action android:name="android.location.PROVIDERS_CHANGED" />
+            </intent-filter>
+        </receiver>
+
     </application>
 
 </manifest>
