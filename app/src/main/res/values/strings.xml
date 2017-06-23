@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">MediTrack</string>
+    <string name="title_activity_dashboard">MediTrack</string>
+    <string name="title_today">Today</string>
+    <string name="title_all">All</string>
+    <string name="title_user">Me</string>
+</resources>
