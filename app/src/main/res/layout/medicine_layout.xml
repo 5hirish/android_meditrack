@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/medicine_layout"
+    android:layout_width="match_parent"
+    android:layout_height="100dp"
+    android:focusable="true"
+    android:clickable="true"
+    android:background="?android:attr/selectableItemBackground">
+
+    <TextView
+        android:id="@+id/medicine_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Title"
+        android:textSize="18sp"
+        android:ellipsize="end"
+        android:layout_marginTop="@dimen/dime16"
+        android:layout_marginStart="@dimen/dime16"
+        android:layout_marginLeft="@dimen/dime16"
+        android:layout_alignParentLeft="true"
+        android:maxLines="1" />
+
+    <TextView
+        android:id="@+id/medicine_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="30 min"
+        android:textColor="@android:color/holo_red_light"
+        android:textSize="16sp"
+        android:layout_below="@+id/medicine_name"
+        android:layout_alignStart="@+id/medicine_name"
+        android:layout_alignLeft="@id/medicine_name"
+        android:layout_marginTop="@dimen/dime20" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        android:text="5"
+        android:id="@+id/medicine_dose"
+        android:layout_centerVertical="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginEnd="@dimen/dime20"
+        android:layout_marginRight="@dimen/dime20"/>
+
+
+</RelativeLayout>
