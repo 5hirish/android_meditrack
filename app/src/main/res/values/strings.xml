@@ -11,6 +11,29 @@
 
     <string name="search_hint">Search Medicines</string>
 
+    <string-array name="meds_dose_freq">
+        <item>Daily</item>
+        <item>Weekly</item>
+        <item>Selected weekdays</item>
+    </string-array>
+
+    <string-array name="weekdays">
+        <item>Sunday</item>
+        <item>Monday</item>
+        <item>Tuesday</item>
+        <item>Wednesday</item>
+        <item>Thursday</item>
+        <item>Friday</item>
+        <item>Saturday</item>
+    </string-array>
+
+    <string-array name="meds_dose_prescription">
+        <item>0.5</item>
+        <item>1.0</item>
+        <item>1.5</item>
+        <item>2.0</item>
+    </string-array>
+
 
     <string name="title_activity_add_meds">Add Medicine</string>
 
