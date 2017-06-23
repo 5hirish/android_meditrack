@@ -51,4 +51,17 @@ public class DashboardActivity extends AppCompatActivity {
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
     }
 
+    @Override
+    public void onBackPressed() {
+        int nav_page_id = mViewPager.getCurrentItem();
+        if (nav_page_id == 2){
+            mViewPager.setCurrentItem(1);
+        } else if (nav_page_id == 1){
+            mViewPager.setCurrentItem(0);
+        } else {
+            super.onBackPressed();
+        }
+    }
+
+
 }
