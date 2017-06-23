@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginTop="20dp"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.alleviate.meditrack.AddMedsActivity">
+
+    <RelativeLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/dime16"
+        android:id="@+id/create_linear"
+        xmlns:android="http://schemas.android.com/apk/res/android">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/img_med_ferq"
+            android:padding="2dp"
+            app:srcCompat="@drawable/ic_dashboard_black_24dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/med_freq"
+            android:textSize="20sp"
+            android:text="Select Dose Freq"
+            android:gravity="start"
+            android:layout_toRightOf="@+id/img_med_ferq"
+            android:layout_toEndOf="@+id/img_med_ferq"
+            android:layout_centerHorizontal="true"
+            android:layout_marginStart="20dp"
+            android:layout_marginLeft="20dp"
+            android:focusable="true"
+            android:clickable="true"
+            android:background="?android:attr/selectableItemBackground"/>
+
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/cb_morning"
+            android:padding="2dp"
+            android:layout_marginLeft="10dp"
+            app:srcCompat="@drawable/ic_dashboard_black_24dp"
+            android:layout_alignTop="@+id/label_morning"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:id="@+id/label_morning"
+            android:text="Morning"
+            android:textSize="20sp"
+            android:gravity="start"
+            android:padding="2dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="25dp"
+            android:layout_below="@+id/med_freq"
+            android:layout_alignLeft="@+id/med_freq"
+            android:layout_alignStart="@+id/med_freq" />
+
+        <TextView
+            android:id="@+id/morning_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginEnd="15dp"
+            android:layout_marginRight="15dp"
+            android:textSize="20sp"
+            android:text="01:20 AM"
+            android:focusable="true"
+            android:clickable="true"
+            android:background="?android:attr/selectableItemBackground"
+            android:layout_alignTop="@+id/label_morning" />
+
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/cb_noon"
+            android:padding="2dp"
+            android:layout_marginLeft="10dp"
+            app:srcCompat="@drawable/ic_dashboard_black_24dp"
+            android:layout_alignTop="@+id/label_noon"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:id="@+id/label_noon"
+            android:text="Noon"
+            android:padding="2dp"
+            android:textSize="20sp"
+            android:gravity="start"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="10dp"
+            android:layout_below="@+id/label_morning"
+            android:layout_alignLeft="@+id/med_freq"
+            android:layout_alignStart="@+id/med_freq"/>
+
+        <TextView
+            android:id="@+id/noon_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginEnd="15dp"
+            android:layout_marginRight="15dp"
+            android:textSize="20sp"
+            android:focusable="true"
+            android:clickable="true"
+            android:background="?android:attr/selectableItemBackground"
+            android:text="01:20 AM"
+            android:layout_alignTop="@+id/label_noon" />
+
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/cb_evening"
+            android:padding="2dp"
+            android:layout_marginLeft="10dp"
+            app:srcCompat="@drawable/ic_dashboard_black_24dp"
+            android:layout_alignTop="@+id/label_evening"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:id="@+id/label_evening"
+            android:text="Evening"
+            android:padding="2dp"
+            android:textSize="20sp"
+            android:gravity="start"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="10dp"
+            android:layout_below="@+id/label_noon"
+            android:layout_alignLeft="@+id/med_freq"
+            android:layout_alignStart="@+id/med_freq"/>
+
+        <TextView
+            android:id="@+id/evening_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginEnd="15dp"
+            android:layout_marginRight="15dp"
+            android:textSize="20sp"
+            android:text="01:20 AM"
+            android:focusable="true"
+            android:clickable="true"
+            android:background="?android:attr/selectableItemBackground"
+            android:layout_alignTop="@+id/label_evening" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/label_evening"
+            android:hint="Dose Prescription: "
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:layout_marginTop="20dp"
+            android:inputType="number"
+            android:id="@+id/label_does_quant" />
+
+        <Spinner
+            android:id="@+id/dose_quant"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:spinnerMode="dropdown"
+            android:layout_alignTop="@+id/label_does_quant"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/dose_quant"
+            android:hint="Total Dose Quantity: "
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:layout_marginTop="20dp"
+            android:inputType="number"
+            android:id="@+id/label_does_total" />
+
+        <EditText
+            android:id="@+id/total_dose"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/dose_quant"
+            android:ems="10"
+            android:inputType="number"
+            android:maxLength="4"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_toRightOf="@+id/label_does_total"
+            android:layout_toEndOf="@+id/label_does_total" />
+
+
+        <!--<TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Debug info..."
+            android:id="@+id/debug_01"
+            android:layout_gravity="center_horizontal"
+            android:layout_below="@id/priority_value"
+            android:textColor="@color/black"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="@dimen/dime20"/>-->
+
+    </RelativeLayout>
+
+</android.support.v4.widget.NestedScrollView>
