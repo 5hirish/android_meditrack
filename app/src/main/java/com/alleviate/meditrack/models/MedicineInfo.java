@@ -17,4 +17,8 @@ public class MedicineInfo {
         this.medicine_dose = medicine_dose;
         this.medicine_remind_time = medicine_remind_time;
     }
+
+    public String getMedicine_name(){
+        return medicine_name;
+    }
 }
