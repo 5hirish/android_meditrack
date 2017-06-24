@@ -41,7 +41,6 @@ public class BootReceiver extends BroadcastReceiver{
             editor.apply();*/
 
             Log.d("Medi:BootMessage", "Boot Complete");
-            Log.d("Medi:GeoFence","GeoFence set after Boot");
 
             /*if (Constants.debug_flag){
                 SQLiteHelper.insert_log("DayMan:BootMessage - Boot Complete - " + Calendar.getInstance().getTime(), context);
