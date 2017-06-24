@@ -6,26 +6,13 @@ import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
-import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteQueryBuilder;
-import android.location.LocationManager;
-import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.app.ActivityCompat;
 import android.util.Log;
 
 import com.alleviate.meditrack.alarms.AlarmRemind;
 import com.alleviate.meditrack.alarms.AlarmSetter;
 import com.alleviate.meditrack.constants.Constants;
 
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 
 public class BootReceiver extends BroadcastReceiver{
 
@@ -41,8 +28,6 @@ public class BootReceiver extends BroadcastReceiver{
                 || intent.getAction().equals("android.intent.action.REBOOT")) {
 
             set_parent_alarm(context);
-
-            set_notify_alarm(context);
 
             //set_protocol_alarm(context);
 
@@ -64,30 +49,6 @@ public class BootReceiver extends BroadcastReceiver{
         }
     }
 
-    private void set_notify_alarm(Context context) {
-
-        int parent_id = Constants.reminder_alarm_id;
-
-        Calendar cal = Calendar.getInstance();
-        cal.set(Calendar.HOUR_OF_DAY, 6);
-        cal.set(Calendar.MINUTE, 0);
-
-        Intent parent_intent = new Intent(context, AlarmRemind.class);
-        //parent_intent.putExtra(Constants.reminder_alarm_id_key, parent_id);
-
-        PendingIntent parent_pending_intent = PendingIntent.getBroadcast(context, parent_id, parent_intent, 0);
-        AlarmManager parent_alarm = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
-
-        parent_alarm.setRepeating(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), AlarmManager.INTERVAL_DAY, parent_pending_intent);
-
-        Log.d("DayMan:Reminder", "Reminder Alarm Set Id " + parent_id);
-
-        /*if (Constants.debug_flag){
-            SQLiteHelper.insert_log("DayMan:ReminderAlarm - Alarm ("+parent_id+") created - "+ Calendar.getInstance().getTime(),context);
-        }*/
-
-    }
-
     private void set_parent_alarm(Context context) {
 
         int parent_id = Constants.parent_alarm_id;
@@ -104,7 +65,7 @@ public class BootReceiver extends BroadcastReceiver{
 
         parent_alarm.setRepeating(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), AlarmManager.INTERVAL_DAY, parent_pending_intent);
 
-        Log.d("DayMan:ParentAlarm", "Parent Alarm Set After Boot Id " + parent_id);
+        Log.d("Medi:ParentAlarm", "Parent Alarm Set After Boot Id " + parent_id);
 
         /*if (Constants.debug_flag){
             SQLiteHelper.insert_log("DayMan:ParentAlarm - Parent Alarm Set After Boot at - "+ Calendar.getInstance().getTime(),context);
