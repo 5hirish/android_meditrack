@@ -37,7 +37,7 @@ public class AddMedsActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         final EditText et_med_name = (EditText)findViewById(R.id.medicine_name);
-        TextView tv_med_dose_freq = (TextView)findViewById(R.id.med_freq);
+        final TextView tv_med_dose_freq = (TextView)findViewById(R.id.med_freq);
         CheckBox cb_med_dose_morning = (CheckBox)findViewById(R.id.cb_morning);
         CheckBox cb_med_dose_noon = (CheckBox)findViewById(R.id.cb_noon);
         CheckBox cb_med_dose_night = (CheckBox)findViewById(R.id.cb_evening);
@@ -57,11 +57,16 @@ public class AddMedsActivity extends AppCompatActivity {
         tv_med_dose_noon_time.setText(init_time(calendar, time_12hr, 13));
         tv_med_dose_night_time.setText(init_time(calendar, time_12hr, 20));
 
+        cb_med_dose_night.setChecked(true);                                     // Night Does is default.
+        db_meds_dose_freq = getString(R.string.meds_freq_dialy);
 
         tv_med_dose_freq.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 prep_dialogue_dose_freq().show();
+
+                tv_med_dose_freq.setText(db_meds_dose_freq);
 
             }
         });
@@ -110,6 +115,7 @@ public class AddMedsActivity extends AppCompatActivity {
                 if (db_meds_name.equals("")){
                     Snackbar.make(view, "Medicine name is empty!", Snackbar.LENGTH_LONG).show();
                 } else {
+
 
                     //finish();
                 }
@@ -219,6 +225,7 @@ public class AddMedsActivity extends AppCompatActivity {
         dialog_list_freq.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+
                 db_meds_dose_freq = meds_dose_freq_adapter.getItem(position).toString();
 
                 // Dialogue for displaying days of week //
@@ -255,7 +262,7 @@ public class AddMedsActivity extends AppCompatActivity {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
                             weekdays.clear();
-                            //db_meds_dose_freq = Constants.task_repeat_no;
+                            db_meds_dose_freq = getString(R.string.meds_freq_dialy);
                         }
                     });
 

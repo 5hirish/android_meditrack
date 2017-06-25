@@ -19,6 +19,13 @@
     <string name="dialogue_cancel">Cancel</string>
 
     <string-array name="meds_dose_freq">
+        <item>Daily Dose</item>
+        <item>Weekly Dose</item>
+    </string-array>
+
+    <string name="meds_freq_dialy">Daily</string>
+
+    <string-array name="meds_dose_freq_v2">
         <item>Daily</item>
         <item>Weekly</item>
         <item>Selected weekdays</item>
@@ -35,10 +42,10 @@
     </string-array>
 
     <string-array name="meds_dose_prescription">
-        <item>0.5</item>
-        <item>1.0</item>
-        <item>1.5</item>
-        <item>2.0</item>
+        <item>1/2 tablet</item>
+        <item>1 tablet</item>
+        <item>1 &amp; 1/2 tablets</item>
+        <item>2 tablets</item>
     </string-array>
 
 
