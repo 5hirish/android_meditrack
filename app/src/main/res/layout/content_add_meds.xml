@@ -30,7 +30,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/med_freq"
             android:textSize="20sp"
-            android:text="Select Dose Freq"
+            android:text="@string/select_meds_dose_freq"
             android:gravity="start"
             android:layout_toRightOf="@+id/img_med_ferq"
             android:layout_toEndOf="@+id/img_med_ferq"
@@ -57,7 +57,7 @@
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:id="@+id/label_morning"
-            android:text="Morning"
+            android:text="@string/morning"
             android:textSize="20sp"
             android:gravity="start"
             android:padding="2dp"
@@ -99,7 +99,7 @@
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:id="@+id/label_noon"
-            android:text="Noon"
+            android:text="@string/noon"
             android:padding="2dp"
             android:textSize="20sp"
             android:gravity="start"
@@ -141,7 +141,7 @@
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:id="@+id/label_evening"
-            android:text="Evening"
+            android:text="@string/evening"
             android:padding="2dp"
             android:textSize="20sp"
             android:gravity="start"
@@ -180,7 +180,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint="Dose Prescription: "
+            android:hint="@string/select_meds_dose_prescription"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:layout_marginTop="17dp"
             android:inputType="number"
@@ -197,7 +197,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/dose_quant"
-            android:hint="Total Dose Quantity: "
+            android:hint="@string/total_dose_quantity"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:layout_marginTop="20dp"
             android:inputType="number"
@@ -219,17 +219,17 @@
             android:layout_toEndOf="@+id/label_does_total" />
 
 
-        <!--<TextView
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="Debug info..."
             android:id="@+id/debug_01"
             android:layout_gravity="center_horizontal"
-            android:layout_below="@id/priority_value"
-            android:textColor="@color/black"
+            android:layout_below="@id/total_dose"
+            android:layout_marginTop="20dp"
             android:layout_centerHorizontal="true"
-            android:layout_marginBottom="@dimen/dime20"/>-->
+            android:layout_marginBottom="@dimen/dime20"/>
 
     </RelativeLayout>
 
