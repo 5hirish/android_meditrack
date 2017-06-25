@@ -8,6 +8,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
@@ -23,10 +24,12 @@ import com.alleviate.meditrack.constants.Constants;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 
 public class AddMedsActivity extends AppCompatActivity {
 
     String db_meds_name, db_meds_dose_freq;
+    double db_meds_prescription;
     int alarm_minutes, alarm_hour, alarm_day, alarm_month, alarm_year;
 
     @Override
@@ -41,10 +44,10 @@ public class AddMedsActivity extends AppCompatActivity {
         CheckBox cb_med_dose_morning = (CheckBox)findViewById(R.id.cb_morning);
         CheckBox cb_med_dose_noon = (CheckBox)findViewById(R.id.cb_noon);
         CheckBox cb_med_dose_night = (CheckBox)findViewById(R.id.cb_evening);
-        TextView tv_med_dose_morning_time = (TextView)findViewById(R.id.morning_time);
-        TextView tv_med_dose_noon_time = (TextView)findViewById(R.id.noon_time);
-        TextView tv_med_dose_night_time = (TextView)findViewById(R.id.evening_time);
-        TextView tv_med_dose_quant = (TextView)findViewById(R.id.dose_quant);
+        final TextView tv_med_dose_morning_time = (TextView)findViewById(R.id.morning_time);
+        final TextView tv_med_dose_noon_time = (TextView)findViewById(R.id.noon_time);
+        final TextView tv_med_dose_night_time = (TextView)findViewById(R.id.evening_time);
+        final TextView tv_med_dose_quant = (TextView)findViewById(R.id.dose_quant);
         EditText et_med_dose_total = (EditText)findViewById(R.id.total_dose);
         final TextView tv_debug_info = (TextView)findViewById(R.id.debug_01);
 
@@ -75,7 +78,7 @@ public class AddMedsActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                prep_dialogue_time_picker(9).show();
+                prep_dialogue_time_picker(9, tv_med_dose_morning_time).show();
             }
         });
 
@@ -83,7 +86,7 @@ public class AddMedsActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                prep_dialogue_time_picker(13).show();
+                prep_dialogue_time_picker(13, tv_med_dose_noon_time).show();
             }
         });
 
@@ -91,7 +94,7 @@ public class AddMedsActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                prep_dialogue_time_picker(20).show();
+                prep_dialogue_time_picker(20, tv_med_dose_night_time).show();
             }
         });
 
@@ -99,7 +102,7 @@ public class AddMedsActivity extends AppCompatActivity {
         tv_med_dose_quant.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                prep_dialogue_dose_prescription().show();
+                prep_dialogue_dose_prescription(tv_med_dose_quant).show();
             }
         });
         //spi_med_dose_quant
@@ -137,7 +140,7 @@ public class AddMedsActivity extends AppCompatActivity {
         return time_12hr.format(calendar.getTime());
     }
 
-    private AlertDialog prep_dialogue_dose_prescription() {
+    private AlertDialog prep_dialogue_dose_prescription(final TextView tv_med_dose_quant) {
 
         final ArrayAdapter meds_dose_prescription_adapter =
                 ArrayAdapter.createFromResource(AddMedsActivity.this, R.array.meds_dose_prescription, R.layout.select_dialog_item);
@@ -157,14 +160,31 @@ public class AddMedsActivity extends AppCompatActivity {
 
         final AlertDialog select_med_pres = meds_dose_pres_dialog.create();
 
-        meds_dose_pres_dialog.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        dialog_list_pres.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-            }
+                switch (position) {
+                    case 0:
+                        db_meds_prescription = 0.5;
+                        break;
+                    case 1:
+                        db_meds_prescription = 1;
+                        break;
+                    case 2:
+                        db_meds_prescription = 1.5;
+                        break;
+                    case 3:
+                        db_meds_prescription = 2;
+                        break;
+                    default:
+                        db_meds_prescription = 1;
+                        break;
+                }
 
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
+                tv_med_dose_quant.setText(meds_dose_prescription_adapter.getItem(position).toString());
+
+                select_med_pres.dismiss();
 
             }
         });
@@ -173,29 +193,24 @@ public class AddMedsActivity extends AppCompatActivity {
 
     }
 
-    private TimePickerDialog prep_dialogue_time_picker(int hour) {
-
-        final Calendar calendar = Calendar.getInstance();
-        alarm_minutes = calendar.get(Calendar.MINUTE);
-        alarm_hour = calendar.get(Calendar.HOUR_OF_DAY);
+    private TimePickerDialog prep_dialogue_time_picker(int hour, final TextView tv_med_dose_time) {
 
         final TimePickerDialog select_time_dialog = new TimePickerDialog(AddMedsActivity.this, new TimePickerDialog.OnTimeSetListener() {
             @Override
             public void onTimeSet(TimePicker timePicker, int picked_hour, int picked_minute) {
-                //alarm_hour = picked_hour;
-                //alarm_minutes = picked_minute;
 
+                SimpleDateFormat time_12hr = new SimpleDateFormat(Constants.time_12hr);
                 SimpleDateFormat std_time = new SimpleDateFormat(Constants.time_std);
-                //dtask_time = picked_hour+":"+picked_minute;
+                String meds_time = picked_hour+":"+picked_minute;
 
-                /*try{
+                try{
 
-                    Date picked_time = std_time.parse(dtask_time);
-                    vtask_time.setText(time_12hr.format(picked_time));
+                    Date picked_time = std_time.parse(meds_time);
+                    tv_med_dose_time.setText(time_12hr.format(picked_time));
 
                 }catch (java.text.ParseException exp){
-                    Log.d("DayMan:Exception","Time Parsing exception - "+exp);
-                }*/
+                    Log.d("Medi:Exception","Time Parsing exception - "+exp);
+                }
             }
         }, hour, 0, false);
 
