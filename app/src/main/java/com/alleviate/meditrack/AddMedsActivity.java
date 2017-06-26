@@ -8,6 +8,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -176,14 +177,23 @@ public class AddMedsActivity extends AppCompatActivity {
                 SimpleDateFormat sdf_std = new SimpleDateFormat(Constants.date_std);
                 String db_alarm_date = sdf_std.format(cal.getTime());
 
+                boolean is_unique = check_medicine_name(db_meds_name);
+
 
                 if (db_meds_name.equals("")){
                     Snackbar.make(view, "Medicine name is empty!", Snackbar.LENGTH_LONG).show();
                 } else {
 
-                    insert_medicine(db_meds_name, db_meds_dose_freq, db_meds_prescription, db_alarm_date, db_meds_quantity, db_meds_deducts);
+                    if (is_unique) {
 
-                    Toast.makeText(getApplicationContext()," Reminder Set", Toast.LENGTH_SHORT).show();
+                        insert_medicine(db_meds_name, db_meds_dose_freq, db_meds_prescription, db_alarm_date, db_meds_quantity, db_meds_deducts);
+
+                        Toast.makeText(getApplicationContext()," Reminder Set", Toast.LENGTH_SHORT).show();
+
+                    } else {
+                        Snackbar.make(view, db_meds_name+" is already added!", Snackbar.LENGTH_LONG).show();
+
+                    }
 
                 }
 
@@ -192,6 +202,16 @@ public class AddMedsActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    private boolean check_medicine_name(String db_meds_name) {
+
+        SQLiteHelper db = new SQLiteHelper(getApplicationContext());
+        SQLiteDatabase dbr = db.getWritableDatabase();
+
+        Cursor cur = dbr.query(SQLiteHelper.db_med_db, new String[]{ SQLiteHelper.db_med_name}, SQLiteHelper.db_med_name +" = ? ", new String[] {db_meds_name}, null, null, null);
+        int count = cur.getCount();
+        return count <= 0;
     }
 
     private void insert_medicine(String db_meds_name, String db_meds_dose_freq, double db_meds_prescription,
