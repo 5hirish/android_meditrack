@@ -13,7 +13,6 @@ import android.database.sqlite.SQLiteQueryBuilder;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.support.v4.app.NotificationCompat;
-import android.support.v4.app.TaskStackBuilder;
 
 import com.alleviate.meditrack.DashboardActivity;
 import com.alleviate.meditrack.R;
@@ -63,7 +62,7 @@ public class AlarmReceiver extends BroadcastReceiver{
                 med_name = cursor.getString(cursor.getColumnIndex(SQLiteHelper.db_med_name));
                 med_dose = cursor.getString(cursor.getColumnIndex(SQLiteHelper.db_med_dose));
 
-                alarm_freq = cursor.getString(cursor.getColumnIndex(SQLiteHelper.db_alarm_freq));
+                alarm_freq = cursor.getString(cursor.getColumnIndex(SQLiteHelper.db_alarms_freq));
                 alarm_date = cursor.getString(cursor.getColumnIndex(SQLiteHelper.db_alarms_date));
                 alarm_status = cursor.getString(cursor.getColumnIndex(SQLiteHelper.db_alarms_status));
 

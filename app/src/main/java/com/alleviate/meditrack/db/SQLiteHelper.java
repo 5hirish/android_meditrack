@@ -28,7 +28,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
     public static final String db_alarm_med_id = "Alarms_Med_Id";
     public static final String db_alarms_time = "Alarms_Time";
     public static final String db_alarms_date = "Alarms_Date";
-    public static final String db_alarm_freq = "Alarms_Frequency";
+    public static final String db_alarms_freq = "Alarms_Frequency";
     public static final String db_alarms_session = "Alarms_Session";
     public static final String db_alarms_status = "Alarms_Status";
 
@@ -48,7 +48,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
                 ""+db_med_dose+" DOUBLE NOT NULL, "+db_med_quant+" DOUBLE NOT NULL, "+db_med_deduct+" DOUBLE NOT NULL)";
 
         String create_db_alarms = "CREATE TABLE "+db_alarms+" ( "+db_alarms_id+" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "+db_alarm_med_id+" INTEGER NOT NULL, " +
-                ""+db_alarms_time+" VARCHAR NOT NULL, "+db_alarms_date+" VARCHAR NOT NULL,"+db_alarm_freq+" VARCHAR NOT NULL, "+db_alarms_session+" VARCHAR NOT NULL, "+db_alarms_status+" VARCHAR NOT NULL)";
+                ""+db_alarms_time+" VARCHAR NOT NULL, "+db_alarms_date+" VARCHAR NOT NULL,"+ db_alarms_freq +" VARCHAR NOT NULL, "+db_alarms_session+" VARCHAR NOT NULL, "+db_alarms_status+" VARCHAR NOT NULL)";
 
 
         sqLiteDatabase.execSQL(create_db_meds);

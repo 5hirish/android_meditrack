@@ -1,26 +1,17 @@
 package com.alleviate.meditrack;
 
-import android.app.AlarmManager;
-import android.app.PendingIntent;
 import android.content.ContentValues;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteQueryBuilder;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.alleviate.meditrack.constants.Constants;
 import com.alleviate.meditrack.db.SQLiteHelper;
 
 import java.text.ParseException;
@@ -120,7 +111,7 @@ public class DebugActivity extends AppCompatActivity {
                             cur.getInt(cur.getColumnIndex(SQLiteHelper.db_alarm_med_id))+"] - "+
                             cur.getString(cur.getColumnIndex(SQLiteHelper.db_alarms_time))+" - "+
                             cur.getString(cur.getColumnIndex(SQLiteHelper.db_alarms_date))+" - "+
-                            cur.getString(cur.getColumnIndex(SQLiteHelper.db_alarm_freq))+" - "+
+                            cur.getString(cur.getColumnIndex(SQLiteHelper.db_alarms_freq))+" - "+
                             cur.getString(cur.getColumnIndex(SQLiteHelper.db_alarms_session))+" - "+
                             cur.getString(cur.getColumnIndex(SQLiteHelper.db_alarms_status))+"\n"
                     );
@@ -158,7 +149,117 @@ public class DebugActivity extends AppCompatActivity {
 
     private void execute_alarm_manager(Context context) {
 
+        SQLiteHelper db = new SQLiteHelper(context);
+        SQLiteDatabase dbw =db.getWritableDatabase();
+
+        String[] columns = {
+                SQLiteHelper.db_alarms_id,
+                SQLiteHelper.db_alarms_time,
+                SQLiteHelper.db_alarms_date,
+                SQLiteHelper.db_alarms_freq,
+                SQLiteHelper.db_alarms_status
+        };
+
+        Cursor cur = dbw.query(SQLiteHelper.db_alarms, columns, null, null, null, null, null);
+
+        if(cur != null){
+            if (cur.moveToFirst()){
+                do{
+
+                    int alarm_id = cur.getInt(cur.getColumnIndex(SQLiteHelper.db_alarms_id));
+                    String alarm_time = cur.getString(cur.getColumnIndex(SQLiteHelper.db_alarms_time));
+                    String alarm_date = cur.getString(cur.getColumnIndex(SQLiteHelper.db_alarms_date));
+                    String alarm_repeat = cur.getString(cur.getColumnIndex(SQLiteHelper.db_alarms_freq));
+                    String alarm_status = cur.getString(cur.getColumnIndex(SQLiteHelper.db_alarms_status));
+
+                    SimpleDateFormat std_date = new SimpleDateFormat(Constants.date_std);
+
+                    Calendar cal_meds_date = Calendar.getInstance();                                                       // Meds Date Parse
+                    Date meds_date = new Date();
+                    try {
+                        meds_date = std_date.parse(alarm_date);
+                    } catch (ParseException e) {e.printStackTrace();}
+                    cal_meds_date.setTime(meds_date);
+
+                    Calendar cal_today = Calendar.getInstance();                                                        // Today Date Parse
+                    String date_today = std_date.format(cal_today.getTime());
+                    Date today_date = new Date();
+                    try {
+                        today_date = std_date.parse(date_today);
+                    } catch (ParseException e) {e.printStackTrace();}
+                    cal_today.setTime(today_date);
+
+                    if (cal_today.equals(cal_meds_date)) {
+
+                        Log.d("Medi:Alarm","Set Alarm for "+alarm_id);
+
+                        if (alarm_status.equals(Constants.db_alarm_status_enabled)) {
+
+                            //set_alarm (context, alarm_id, alarm_time);
+                        }
+
+                    } else {
+
+                        switch (alarm_repeat){
+
+                            case Constants.meds_freq_daily:
+
+                                if (cal_today.after(cal_meds_date)) {
+
+                                    cal_meds_date.set(Calendar.DATE, cal_today.get(Calendar.DATE));
+                                }
+
+                                if (cal_today.equals(cal_meds_date)) {
+
+                                    //set_alarm (context, alarm_id, alarm_time);
+
+                                }
+
+                                Log.d("Medi:Check", cal_today.getTime()+" with "+cal_meds_date.getTime());
+
+                                update_data(dbw, cal_meds_date, alarm_id);
+
+                                break;
+
+                            case Constants.meds_freq_weekly:
+
+                                if (cal_today.after(cal_meds_date)) {
+                                    do {
+                                        cal_meds_date.add(Calendar.DATE, 7);
+
+                                    } while (cal_today.after(cal_meds_date));
+                                }
+
+                                if (cal_today.equals(cal_meds_date)) {
+
+                                    //set_alarm (context, alarm_id, alarm_time);
+
+                                }
+
+                                update_data(dbw, cal_meds_date, alarm_id);
+
+                                break;
+                        }
+                    }
+
+                }while (cur.moveToNext());
+            }cur.close();
+        }dbw.close();db.close();
+    }
+
+    private void update_data(SQLiteDatabase dbw, Calendar cal_task_date, int alarm_id) {
+
+        SimpleDateFormat std_date = new SimpleDateFormat(Constants.date_std);
+
+        String dtask_date = std_date.format(cal_task_date.getTime());
+
+        ContentValues update_alarm = new ContentValues();
+        update_alarm.put(SQLiteHelper.db_alarms_date, dtask_date);
+        update_alarm.put(SQLiteHelper.db_alarms_status, Constants.db_alarm_status_enabled);
+
+        dbw.update(SQLiteHelper.db_alarms, update_alarm, SQLiteHelper.db_alarms_id+" = ?", new String[]{alarm_id+""});
 
     }
+
 
 }
