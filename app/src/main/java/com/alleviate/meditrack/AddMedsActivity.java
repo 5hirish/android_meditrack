@@ -203,7 +203,6 @@ public class AddMedsActivity extends AppCompatActivity {
         ContentValues medicine_val = new ContentValues();
         medicine_val.put(SQLiteHelper.db_med_name, db_meds_name);
         medicine_val.put(SQLiteHelper.db_med_dose, db_meds_prescription);
-        medicine_val.put(SQLiteHelper.db_med_freq, db_meds_dose_freq);
         medicine_val.put(SQLiteHelper.db_med_quant, db_meds_quantity);
         medicine_val.put(SQLiteHelper.db_med_deduct, db_meds_deducts);
 
@@ -217,6 +216,7 @@ public class AddMedsActivity extends AppCompatActivity {
                 alarms_val.put(SQLiteHelper.db_alarm_med_id, (int) db_meds_id);
                 alarms_val.put(SQLiteHelper.db_alarms_time, db_meds_time[i]);
                 alarms_val.put(SQLiteHelper.db_alarms_date, db_alarm_date);
+                medicine_val.put(SQLiteHelper.db_alarm_freq, db_meds_dose_freq);
                 alarms_val.put(SQLiteHelper.db_alarms_session, Constants.db_dose_session[i]);
                 alarms_val.put(SQLiteHelper.db_alarms_status, Constants.db_alarm_status_enabled);
 

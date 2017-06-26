@@ -53,7 +53,7 @@ public class AlarmReceiver extends BroadcastReceiver{
         queryBuilder.setTables(SQLiteHelper.db_alarms +" INNER JOIN "+ SQLiteHelper.db_med_db +" ON "+SQLiteHelper.db_alarm_med_id+" = "+SQLiteHelper.db_med_id);
         Cursor cursor = queryBuilder.query(dbr, null, SQLiteHelper.db_alarms_id+" = ? ", new String[] { ""+alarm_id}, null, null, null);
 
-        String med_name = "", med_dose = "", med_freq = "", alarm_date = "", alarm_status = "";
+        String med_name = "", med_dose = "", alarm_freq = "", alarm_date = "", alarm_status = "";
         int med_id = 0;
 
         if(cursor != null){
@@ -62,8 +62,8 @@ public class AlarmReceiver extends BroadcastReceiver{
                 med_id = cursor.getInt(cursor.getColumnIndex(SQLiteHelper.db_med_id));
                 med_name = cursor.getString(cursor.getColumnIndex(SQLiteHelper.db_med_name));
                 med_dose = cursor.getString(cursor.getColumnIndex(SQLiteHelper.db_med_dose));
-                med_freq = cursor.getString(cursor.getColumnIndex(SQLiteHelper.db_med_freq));
 
+                alarm_freq = cursor.getString(cursor.getColumnIndex(SQLiteHelper.db_alarm_freq));
                 alarm_date = cursor.getString(cursor.getColumnIndex(SQLiteHelper.db_alarms_date));
                 alarm_status = cursor.getString(cursor.getColumnIndex(SQLiteHelper.db_alarms_status));
 
@@ -81,7 +81,7 @@ public class AlarmReceiver extends BroadcastReceiver{
         Intent notification_cancel_intent = new Intent(context, CancelReceiver.class);
         notification_cancel_intent.putExtra(Constants.in_notify_med_id, med_id);
         notification_cancel_intent.putExtra(Constants.in_notify_alarm_id, alarm_id);
-        notification_cancel_intent.putExtra(Constants.in_notify_med_freq, med_freq);
+        notification_cancel_intent.putExtra(Constants.in_notify_med_freq, alarm_freq);
         notification_cancel_intent.putExtra(Constants.in_notify_alarm_date, alarm_date);
 
         PendingIntent notification_cancel_pendingIntent = PendingIntent.getBroadcast(context, alarm_id, notification_cancel_intent,PendingIntent.FLAG_UPDATE_CURRENT);
