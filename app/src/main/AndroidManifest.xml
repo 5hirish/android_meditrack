@@ -48,6 +48,14 @@
             android:enabled="true"
             android:exported="false" />
         <receiver
+            android:name=".alarms.AlarmReceiver"
+            android:enabled="true"
+            android:exported="false" />
+        <receiver
+            android:name=".alarms.CancelReceiver"
+            android:enabled="true"
+            android:exported="false" />
+        <receiver
             android:name=".broadcast_receivers.BootReceiver"
             android:enabled="true"
             android:exported="false">

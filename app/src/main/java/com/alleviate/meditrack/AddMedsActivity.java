@@ -1,12 +1,18 @@
 package com.alleviate.meditrack;
 
+import android.app.AlarmManager;
 import android.app.AlertDialog;
+import android.app.PendingIntent;
 import android.app.TimePickerDialog;
 import android.content.ContentValues;
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -21,7 +27,9 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
+import com.alleviate.meditrack.alarms.AlarmReceiver;
 import com.alleviate.meditrack.constants.Constants;
 import com.alleviate.meditrack.db.SQLiteHelper;
 
@@ -35,7 +43,9 @@ public class AddMedsActivity extends AppCompatActivity {
 
     String db_meds_name, db_meds_dose_freq;
     double db_meds_prescription, db_meds_quantity, db_meds_deducts;
-    int alarm_minutes, alarm_hour, alarm_day, alarm_month, alarm_year;
+
+    String[] db_meds_time = new String[3];
+    boolean db_meds_dose_session[] = new boolean[3];
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +53,8 @@ public class AddMedsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_meds);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         final EditText et_med_name = (EditText)findViewById(R.id.medicine_name);
         final TextView tv_med_dose_freq = (TextView)findViewById(R.id.med_freq);
@@ -124,8 +136,6 @@ public class AddMedsActivity extends AppCompatActivity {
                 db_meds_quantity = Double.parseDouble(et_med_dose_total.getText().toString());
                 db_meds_deducts = 0;
 
-                String[] db_meds_time = new String[3];
-
                 try {
 
                     SimpleDateFormat sdf_std = new SimpleDateFormat(Constants.time_std);
@@ -139,9 +149,6 @@ public class AddMedsActivity extends AppCompatActivity {
                     Log.d("Medi:Exception","Date Parsing exception - "+exp);
 
                 }
-
-
-                boolean db_meds_dose_session[] = new boolean[3];
 
                 if (cb_med_dose_morning.isChecked()){
                     db_meds_dose_session[0] = true;
@@ -176,24 +183,19 @@ public class AddMedsActivity extends AppCompatActivity {
                     Snackbar.make(view, "Medicine name is empty!", Snackbar.LENGTH_LONG).show();
                 } else {
 
-
-                    insert_medicine(db_meds_name, db_meds_dose_freq, db_meds_prescription, db_meds_time,
-                            db_meds_dose_session, db_alarm_date, db_meds_quantity, db_meds_deducts);
+                    insert_medicine(db_meds_name, db_meds_dose_freq, db_meds_prescription, db_alarm_date, db_meds_quantity, db_meds_deducts);
                 }
 
                 tv_debug_info.setText("Name: "+db_meds_name+"\nFrequency: "+db_meds_dose_freq+"\nPrescription: "+db_meds_prescription+
                         "\nMorning: "+db_meds_time[0]+", Noon: "+db_meds_time[1]+", Night: "+db_meds_time[2]+"\nQuantity: "+db_meds_quantity+"\nDeducts:");
 
-                /*Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();*/
+                Toast.makeText(getApplicationContext()," Reminder Set", Toast.LENGTH_SHORT).show();
             }
         });
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     private void insert_medicine(String db_meds_name, String db_meds_dose_freq, double db_meds_prescription,
-                                 String[] db_meds_time, boolean[] db_meds_dose_session, String db_alarm_date,
-                                 double db_meds_quantity, double db_meds_deducts) {
+                                 String db_alarm_date, double db_meds_quantity, double db_meds_deducts) {
 
         SQLiteHelper db = new SQLiteHelper(getApplicationContext());
         SQLiteDatabase dbw = db.getWritableDatabase();
@@ -218,12 +220,21 @@ public class AddMedsActivity extends AppCompatActivity {
                 alarms_val.put(SQLiteHelper.db_alarms_session, Constants.db_dose_session[i]);
                 alarms_val.put(SQLiteHelper.db_alarms_status, Constants.db_alarm_status_enabled);
 
-                new InsertAlarm().execute(alarms_val);
+                final int pos = i;
+                InsertAlarm insertAlarm = new InsertAlarm(new AlarmAsyncResponse() {
+                    @Override
+                    public void alarmInserted(Long db_alarm_id) {
+
+                        set_alarm(db_alarm_id, db_meds_time[pos], db_meds_dose_session[pos]);
+                    }
+                });
+
+                insertAlarm.execute(alarms_val);
             }
         }
 
-
-
+        dbw.close();
+        db.close();
 
     }
 
@@ -389,7 +400,18 @@ public class AddMedsActivity extends AppCompatActivity {
         return select_dose_freq;
     }
 
+    interface AlarmAsyncResponse {
+        void alarmInserted(Long db_alarm_id);
+    }
+
     private class InsertAlarm extends AsyncTask<ContentValues, Void, Long> {
+
+        AlarmAsyncResponse alarm_response_handler = null;
+
+        InsertAlarm(AlarmAsyncResponse asyncResponse) {
+            alarm_response_handler = asyncResponse;                     // Assigning call back interface through constructor
+        }
+
         @Override
         protected Long doInBackground(ContentValues... contentValues) {
 
@@ -405,9 +427,48 @@ public class AddMedsActivity extends AppCompatActivity {
         }
 
         @Override
-        protected void onPostExecute(Long result) {
+        protected void onPostExecute(Long db_alarm_id) {
 
-            Log.d("Medi:Database", "Alarm Inserted " + result);
+            Log.d("Medi:Database", "Alarm Inserted " + db_alarm_id);
+
+            alarm_response_handler.alarmInserted(db_alarm_id);
         }
+    }
+
+    private void set_alarm(long db_alarm_id, String db_meds_time, boolean db_meds_dose_session) {
+
+        int alarm_id = (int) db_alarm_id;
+
+        SimpleDateFormat sdf_std = new SimpleDateFormat(Constants.time_std);
+        Calendar calendar = Calendar.getInstance();
+
+        try{
+
+            Date date_alarm_time = sdf_std.parse(db_meds_time);
+            calendar.setTime(date_alarm_time);
+
+        } catch (ParseException exp){
+            Log.d("Medi:Exception","Time Parsing exception - "+exp);
+        }
+
+        Calendar alarm_time = Calendar.getInstance();
+        alarm_time.set(Calendar.HOUR_OF_DAY, calendar.get(Calendar.HOUR_OF_DAY));
+        alarm_time.set(Calendar.MINUTE, calendar.get(Calendar.MINUTE));
+
+        Intent alarm_intent = new Intent(getApplicationContext(), AlarmReceiver.class);
+        alarm_intent.putExtra(Constants.in_alarm_id, alarm_id);
+
+        PendingIntent alarm_pending_intent = PendingIntent.getBroadcast(getApplicationContext(), alarm_id, alarm_intent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+
+        alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, alarm_time.getTimeInMillis(), 0, alarm_pending_intent);
+
+        Log.d("Medi:Alarm","Set Alarm : "+alarm_id+" at "+ alarm_time.getTime());
+
+        if (Constants.debug_flag){
+            SQLiteHelper.insert_log("Medi:Alarm - Alarm Set ("+alarm_id+") at - "+ alarm_time.getTime(), getApplicationContext());
+        }
+
     }
 }

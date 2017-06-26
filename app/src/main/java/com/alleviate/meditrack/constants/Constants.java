@@ -48,6 +48,13 @@ public class Constants {
 
     public static final String[] db_dose_session = {"Morning", "Noon", "Night"};
 
+    public static final String in_alarm_id = "Alarm_Id";
+    public static final String in_notify_med_id = "Notify_Med_Id";
+    public static final String in_notify_alarm_id = "Notify_Alarm_Id";
+    public static final String in_notify_med_freq = "Notify_Med_Freq";
+    public static final String in_notify_alarm_date = "Notify_Alarm_Date";
 
+    public static final String meds_freq_daily = "Daily Dose";
+    public static final String meds_freq_weekly = "Weekly Dose";
 
 }

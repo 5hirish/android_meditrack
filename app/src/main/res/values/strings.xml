@@ -17,6 +17,8 @@
 
     <string name="dialogue_ok">OK</string>
     <string name="dialogue_cancel">Cancel</string>
+    <string name="notify_done">Done</string>
+
 
     <string-array name="meds_dose_freq">
         <item>Daily Dose</item>
@@ -24,6 +26,7 @@
     </string-array>
 
     <string name="meds_freq_daily">Daily Dose</string>
+    <string name="meds_freq_weekly">Weekly Dose</string>
 
     <string-array name="meds_dose_freq_v2">
         <item>Daily Dose</item>
