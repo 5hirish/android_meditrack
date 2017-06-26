@@ -23,11 +23,11 @@
         <item>Weekly Dose</item>
     </string-array>
 
-    <string name="meds_freq_dialy">Daily</string>
+    <string name="meds_freq_dialy">Daily Dose</string>
 
     <string-array name="meds_dose_freq_v2">
-        <item>Daily</item>
-        <item>Weekly</item>
+        <item>Daily Dose</item>
+        <item>Weekly Dose</item>
         <item>Selected weekdays</item>
     </string-array>
 

@@ -29,7 +29,7 @@ import java.util.Date;
 public class AddMedsActivity extends AppCompatActivity {
 
     String db_meds_name, db_meds_dose_freq;
-    double db_meds_prescription;
+    double db_meds_prescription, db_meds_quantity;
     int alarm_minutes, alarm_hour, alarm_day, alarm_month, alarm_year;
 
     @Override
@@ -41,14 +41,14 @@ public class AddMedsActivity extends AppCompatActivity {
 
         final EditText et_med_name = (EditText)findViewById(R.id.medicine_name);
         final TextView tv_med_dose_freq = (TextView)findViewById(R.id.med_freq);
-        CheckBox cb_med_dose_morning = (CheckBox)findViewById(R.id.cb_morning);
-        CheckBox cb_med_dose_noon = (CheckBox)findViewById(R.id.cb_noon);
-        CheckBox cb_med_dose_night = (CheckBox)findViewById(R.id.cb_evening);
+        final CheckBox cb_med_dose_morning = (CheckBox)findViewById(R.id.cb_morning);
+        final CheckBox cb_med_dose_noon = (CheckBox)findViewById(R.id.cb_noon);
+        final CheckBox cb_med_dose_night = (CheckBox)findViewById(R.id.cb_evening);
         final TextView tv_med_dose_morning_time = (TextView)findViewById(R.id.morning_time);
         final TextView tv_med_dose_noon_time = (TextView)findViewById(R.id.noon_time);
         final TextView tv_med_dose_night_time = (TextView)findViewById(R.id.evening_time);
         final TextView tv_med_dose_quant = (TextView)findViewById(R.id.dose_quant);
-        EditText et_med_dose_total = (EditText)findViewById(R.id.total_dose);
+        final EditText et_med_dose_total = (EditText)findViewById(R.id.total_dose);
         final TextView tv_debug_info = (TextView)findViewById(R.id.debug_01);
 
         Calendar calendar = Calendar.getInstance();
@@ -62,15 +62,15 @@ public class AddMedsActivity extends AppCompatActivity {
 
         cb_med_dose_night.setChecked(true);                                     // Night Does is default.
         db_meds_dose_freq = getString(R.string.meds_freq_dialy);
+        db_meds_quantity = 10;
+        db_meds_prescription = 1;
+        et_med_dose_total.setText(String.valueOf(db_meds_quantity));
 
         tv_med_dose_freq.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                prep_dialogue_dose_freq().show();
-
-                tv_med_dose_freq.setText(db_meds_dose_freq);
-
+                prep_dialogue_dose_freq(tv_med_dose_freq).show();
             }
         });
 
@@ -115,6 +115,34 @@ public class AddMedsActivity extends AppCompatActivity {
                 String str_med_name = et_med_name.getText().toString();
                 db_meds_name = str_med_name.replaceAll("'","\'\'");
 
+                db_meds_quantity = Double.parseDouble(et_med_dose_total.getText().toString());
+                String meds_morning_time = tv_med_dose_morning_time.getText().toString();
+                String meds_noon_time = tv_med_dose_noon_time.getText().toString();
+                String meds_night_time = tv_med_dose_night_time.getText().toString();
+
+
+                boolean db_meds_dose_morning, db_meds_dose_noon, db_meds_dose_night;
+
+                if (cb_med_dose_morning.isChecked()){
+                    db_meds_dose_morning = true;
+                }
+
+                if (cb_med_dose_noon.isChecked()) {
+                    db_meds_dose_noon = true;
+                }
+
+                if (cb_med_dose_night.isChecked()) {
+                    db_meds_dose_night = true;
+                }
+
+                if (!cb_med_dose_morning.isChecked() && !cb_med_dose_noon.isChecked() && !cb_med_dose_night.isChecked()) {
+
+                    db_meds_dose_morning = false;
+                    db_meds_dose_noon = false;
+                    db_meds_dose_night = true;
+
+                }
+
                 if (db_meds_name.equals("")){
                     Snackbar.make(view, "Medicine name is empty!", Snackbar.LENGTH_LONG).show();
                 } else {
@@ -123,7 +151,8 @@ public class AddMedsActivity extends AppCompatActivity {
                     //finish();
                 }
 
-                tv_debug_info.setText("Name:\nFrequency:\nPrescription:\nMorning:, Noon:, Night:\nQuantity:");
+                tv_debug_info.setText("Name: "+db_meds_name+"\nFrequency: "+db_meds_dose_freq+"\nPrescription: "+db_meds_prescription+
+                        "\nMorning: "+meds_morning_time+", Noon: "+meds_noon_time+", Night: "+meds_night_time+"\nQuantity: "+db_meds_quantity);
 
                 /*Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();*/
@@ -217,7 +246,7 @@ public class AddMedsActivity extends AppCompatActivity {
         return select_time_dialog;
     }
 
-    private AlertDialog prep_dialogue_dose_freq() {
+    private AlertDialog prep_dialogue_dose_freq(final TextView tv_med_dose_freq) {
 
         final ArrayAdapter meds_dose_freq_adapter = ArrayAdapter.createFromResource(AddMedsActivity.this, R.array.meds_dose_freq, R.layout.select_dialog_item);
         final ArrayList<Integer> weekdays = new ArrayList<Integer>();
@@ -284,6 +313,8 @@ public class AddMedsActivity extends AppCompatActivity {
                     AlertDialog weekday = selected_weekdays_dialog.create();
                     weekday.show();
                 }
+
+                tv_med_dose_freq.setText(db_meds_dose_freq);
 
                 select_dose_freq.dismiss();
             }
