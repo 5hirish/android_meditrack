@@ -182,12 +182,14 @@ public class AddMedsActivity extends AppCompatActivity {
                 } else {
 
                     insert_medicine(db_meds_name, db_meds_dose_freq, db_meds_prescription, db_alarm_date, db_meds_quantity, db_meds_deducts);
+
+                    Toast.makeText(getApplicationContext()," Reminder Set", Toast.LENGTH_SHORT).show();
+
                 }
 
                 tv_debug_info.setText("Name: "+db_meds_name+"\nFrequency: "+db_meds_dose_freq+"\nPrescription: "+db_meds_prescription+
                         "\nMorning: "+db_meds_time[0]+", Noon: "+db_meds_time[1]+", Night: "+db_meds_time[2]+"\nQuantity: "+db_meds_quantity+"\nDeducts:");
 
-                Toast.makeText(getApplicationContext()," Reminder Set", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -218,12 +220,30 @@ public class AddMedsActivity extends AppCompatActivity {
                 alarms_val.put(SQLiteHelper.db_alarms_session, Constants.db_dose_session[i]);
                 alarms_val.put(SQLiteHelper.db_alarms_status, Constants.db_alarm_status_enabled);
 
+                SimpleDateFormat std_time = new SimpleDateFormat(Constants.time_std);
+
+                Calendar cal_meds_time_temp = Calendar.getInstance();                                                       // Meds Time Parse
+                final Calendar cal_meds_time = Calendar.getInstance();
+
+                try {
+                    cal_meds_time_temp.setTime(std_time.parse(db_meds_time[i]));
+                    cal_meds_time.set(Calendar.HOUR_OF_DAY, cal_meds_time_temp.get(Calendar.HOUR_OF_DAY));
+                    cal_meds_time.set(Calendar.MINUTE, cal_meds_time_temp.get(Calendar.MINUTE));
+
+                } catch (ParseException e) {e.printStackTrace();}
+
+                final Calendar cal_now = Calendar.getInstance();                                                        // Today Time Parse
+
+                Log.d("Medi:Check",cal_now.getTime() + " before " + cal_meds_time.getTime());
+
                 final int pos = i;
                 InsertAlarm insertAlarm = new InsertAlarm(new AlarmAsyncResponse() {
                     @Override
                     public void alarmInserted(Long db_alarm_id) {
+                        if (cal_now.before(cal_meds_time)){
 
-                        set_alarm(db_alarm_id, db_meds_time[pos], db_meds_dose_session[pos]);
+                            set_alarm(db_alarm_id, db_meds_time[pos], db_meds_dose_session[pos]);
+                        }
                     }
                 });
 
