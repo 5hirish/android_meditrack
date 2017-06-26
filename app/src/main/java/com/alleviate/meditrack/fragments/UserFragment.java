@@ -8,12 +8,15 @@ import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.alleviate.meditrack.AddMedsActivity;
+import com.alleviate.meditrack.DebugActivity;
 import com.alleviate.meditrack.MainActivity;
 import com.alleviate.meditrack.R;
+import com.alleviate.meditrack.constants.Constants;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -58,6 +61,20 @@ public class UserFragment extends Fragment {
 
             }
         });
+
+        Button debug_btn = (Button) frag_view.findViewById(R.id.button_debug_info);
+        if (Constants.debug_flag) {
+            debug_btn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent in = new Intent(getActivity(), DebugActivity.class);
+                    getActivity().startActivity(in);
+                }
+            });
+        } else {
+            debug_btn.setVisibility(View.INVISIBLE);
+        }
+
         return frag_view;
     }
 

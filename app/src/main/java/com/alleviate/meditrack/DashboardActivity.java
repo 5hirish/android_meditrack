@@ -28,17 +28,17 @@ public class DashboardActivity extends AppCompatActivity {
             switch (item.getItemId()) {
                 case R.id.navigation_today:
                     mViewPager.setCurrentItem(0);
-                    setTitle(Constants.tab_title_today);
+                    //setTitle(Constants.tab_title_today);
 
                     return true;
                 case R.id.navigation_all:
                     mViewPager.setCurrentItem(1);
-                    setTitle(Constants.tab_title_today);
+                    //setTitle(Constants.tab_title_all);
 
                     return true;
                 case R.id.navigation_user:
                     mViewPager.setCurrentItem(2);
-                    setTitle(Constants.tab_title_today);
+                    //setTitle(Constants.tab_title_user);
 
                     return true;
             }

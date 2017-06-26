@@ -41,6 +41,8 @@
                 android:value="com.alleviate.meditrack.DashboardActivity" />
         </activity>
 
+        <activity android:name=".DebugActivity" android:label="Debug" android:parentActivityName=".DashboardActivity"/>
+
         <receiver
             android:name=".alarms.AlarmSetter"
             android:enabled="true"

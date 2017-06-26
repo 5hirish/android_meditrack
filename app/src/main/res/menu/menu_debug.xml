@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/action_medicines"
+        android:orderInCategory="100"
+        android:title="Medicines"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_alarms"
+        android:orderInCategory="100"
+        android:title="Alarms"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_log"
+        android:orderInCategory="100"
+        android:title="Logs"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_parent_alarm"
+        android:orderInCategory="100"
+        android:title="Run Parent Alarm"
+        app:showAsAction="never" />
+
+</menu>
