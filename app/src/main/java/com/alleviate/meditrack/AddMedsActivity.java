@@ -2,7 +2,10 @@ package com.alleviate.meditrack;
 
 import android.app.AlertDialog;
 import android.app.TimePickerDialog;
+import android.content.ContentValues;
 import android.content.DialogInterface;
+import android.database.sqlite.SQLiteDatabase;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -20,7 +23,9 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 
 import com.alleviate.meditrack.constants.Constants;
+import com.alleviate.meditrack.db.SQLiteHelper;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -29,7 +34,7 @@ import java.util.Date;
 public class AddMedsActivity extends AppCompatActivity {
 
     String db_meds_name, db_meds_dose_freq;
-    double db_meds_prescription, db_meds_quantity;
+    double db_meds_prescription, db_meds_quantity, db_meds_deducts;
     int alarm_minutes, alarm_hour, alarm_day, alarm_month, alarm_year;
 
     @Override
@@ -61,9 +66,10 @@ public class AddMedsActivity extends AppCompatActivity {
         tv_med_dose_night_time.setText(init_time(calendar, time_12hr, 20));
 
         cb_med_dose_night.setChecked(true);                                     // Night Does is default.
-        db_meds_dose_freq = getString(R.string.meds_freq_dialy);
+        db_meds_dose_freq = getString(R.string.meds_freq_daily);
         db_meds_quantity = 10;
         db_meds_prescription = 1;
+        db_meds_deducts = 1;
         et_med_dose_total.setText(String.valueOf(db_meds_quantity));
 
         tv_med_dose_freq.setOnClickListener(new View.OnClickListener() {
@@ -116,49 +122,109 @@ public class AddMedsActivity extends AppCompatActivity {
                 db_meds_name = str_med_name.replaceAll("'","\'\'");
 
                 db_meds_quantity = Double.parseDouble(et_med_dose_total.getText().toString());
-                String meds_morning_time = tv_med_dose_morning_time.getText().toString();
-                String meds_noon_time = tv_med_dose_noon_time.getText().toString();
-                String meds_night_time = tv_med_dose_night_time.getText().toString();
+                db_meds_deducts = 0;
+
+                String[] db_meds_time = new String[3];
+
+                try {
+
+                    SimpleDateFormat sdf_std = new SimpleDateFormat(Constants.time_std);
+                    SimpleDateFormat sdf_12hr = new SimpleDateFormat(Constants.time_12hr);
+
+                    db_meds_time[0] = sdf_std.format(sdf_12hr.parse(tv_med_dose_morning_time.getText().toString()));
+                    db_meds_time[1] = sdf_std.format(sdf_12hr.parse(tv_med_dose_noon_time.getText().toString()));
+                    db_meds_time[2] = sdf_std.format(sdf_12hr.parse(tv_med_dose_night_time.getText().toString()));
+
+                } catch (ParseException exp){
+                    Log.d("Medi:Exception","Date Parsing exception - "+exp);
+
+                }
 
 
-                boolean db_meds_dose_morning, db_meds_dose_noon, db_meds_dose_night;
+                boolean db_meds_dose_session[] = new boolean[3];
 
                 if (cb_med_dose_morning.isChecked()){
-                    db_meds_dose_morning = true;
+                    db_meds_dose_session[0] = true;
+                    db_meds_deducts += db_meds_prescription;
                 }
 
                 if (cb_med_dose_noon.isChecked()) {
-                    db_meds_dose_noon = true;
+                    db_meds_dose_session[1] = true;
+                    db_meds_deducts += db_meds_prescription;
                 }
 
                 if (cb_med_dose_night.isChecked()) {
-                    db_meds_dose_night = true;
+                    db_meds_dose_session[2] = true;
+                    db_meds_deducts += db_meds_prescription;
                 }
 
                 if (!cb_med_dose_morning.isChecked() && !cb_med_dose_noon.isChecked() && !cb_med_dose_night.isChecked()) {
-
-                    db_meds_dose_morning = false;
-                    db_meds_dose_noon = false;
-                    db_meds_dose_night = true;
+                    db_meds_dose_session[0] = false;
+                    db_meds_dose_session[1] = false;
+                    db_meds_dose_session[2] = true;
+                    db_meds_deducts = db_meds_prescription;
 
                 }
+
+
+                Calendar cal = Calendar.getInstance();
+                SimpleDateFormat sdf_std = new SimpleDateFormat(Constants.date_std);
+                String db_alarm_date = sdf_std.format(cal.getTime());
+
 
                 if (db_meds_name.equals("")){
                     Snackbar.make(view, "Medicine name is empty!", Snackbar.LENGTH_LONG).show();
                 } else {
 
 
-                    //finish();
+                    insert_medicine(db_meds_name, db_meds_dose_freq, db_meds_prescription, db_meds_time,
+                            db_meds_dose_session, db_alarm_date, db_meds_quantity, db_meds_deducts);
                 }
 
                 tv_debug_info.setText("Name: "+db_meds_name+"\nFrequency: "+db_meds_dose_freq+"\nPrescription: "+db_meds_prescription+
-                        "\nMorning: "+meds_morning_time+", Noon: "+meds_noon_time+", Night: "+meds_night_time+"\nQuantity: "+db_meds_quantity);
+                        "\nMorning: "+db_meds_time[0]+", Noon: "+db_meds_time[1]+", Night: "+db_meds_time[2]+"\nQuantity: "+db_meds_quantity+"\nDeducts:");
 
                 /*Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();*/
             }
         });
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
+
+    private void insert_medicine(String db_meds_name, String db_meds_dose_freq, double db_meds_prescription,
+                                 String[] db_meds_time, boolean[] db_meds_dose_session, String db_alarm_date,
+                                 double db_meds_quantity, double db_meds_deducts) {
+
+        SQLiteHelper db = new SQLiteHelper(getApplicationContext());
+        SQLiteDatabase dbw = db.getWritableDatabase();
+
+        ContentValues medicine_val = new ContentValues();
+        medicine_val.put(SQLiteHelper.db_med_name, db_meds_name);
+        medicine_val.put(SQLiteHelper.db_med_dose, db_meds_prescription);
+        medicine_val.put(SQLiteHelper.db_med_freq, db_meds_dose_freq);
+        medicine_val.put(SQLiteHelper.db_med_quant, db_meds_quantity);
+        medicine_val.put(SQLiteHelper.db_med_deduct, db_meds_deducts);
+
+        long db_meds_id = dbw.insert(SQLiteHelper.db_med_db, null, medicine_val);
+
+
+        for(int i = 0; i < 3; i++){
+            if (db_meds_dose_session[i]){
+
+                ContentValues alarms_val = new ContentValues();
+                alarms_val.put(SQLiteHelper.db_alarm_med_id, (int) db_meds_id);
+                alarms_val.put(SQLiteHelper.db_alarms_time, db_meds_time[i]);
+                alarms_val.put(SQLiteHelper.db_alarms_date, db_alarm_date);
+                alarms_val.put(SQLiteHelper.db_alarms_session, Constants.db_dose_session[i]);
+                alarms_val.put(SQLiteHelper.db_alarms_status, Constants.db_alarm_status_enabled);
+
+                new InsertAlarm().execute(alarms_val);
+            }
+        }
+
+
+
+
     }
 
     private String init_time(Calendar calendar, SimpleDateFormat time_12hr, int hour) {
@@ -306,7 +372,7 @@ public class AddMedsActivity extends AppCompatActivity {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
                             weekdays.clear();
-                            db_meds_dose_freq = getString(R.string.meds_freq_dialy);
+                            db_meds_dose_freq = getString(R.string.meds_freq_daily);
                         }
                     });
 
@@ -321,5 +387,27 @@ public class AddMedsActivity extends AppCompatActivity {
         });
 
         return select_dose_freq;
+    }
+
+    private class InsertAlarm extends AsyncTask<ContentValues, Void, Long> {
+        @Override
+        protected Long doInBackground(ContentValues... contentValues) {
+
+            SQLiteHelper db = new SQLiteHelper(getApplicationContext());
+            SQLiteDatabase dbw = db.getWritableDatabase();
+
+            long resid = dbw.insert(SQLiteHelper.db_alarms, null, contentValues[0]);
+
+            dbw.close();
+            db.close();
+
+            return resid;
+        }
+
+        @Override
+        protected void onPostExecute(Long result) {
+
+            Log.d("Medi:Database", "Alarm Inserted " + result);
+        }
     }
 }

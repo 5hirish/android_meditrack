@@ -20,9 +20,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
     public static final String db_med_id = "Med_Id";            // Foreign Key
     public static final String db_med_name = "Med_Name";
     public static final String db_med_dose = "Med_Dose";
-    public static final String db_med_morning = "Med_Morning";
-    public static final String db_med_noon = "Med_Noon";
-    public static final String db_med_evening = "Med_Evening";
+    public static final String db_med_freq = "Med_Frequency";
     public static final String db_med_quant = "Med_Quantity";
     public static final String db_med_deduct = "Med_Deduct";
 
@@ -31,7 +29,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
     public static final String db_alarm_med_id = "Alarm_Med_Id";
     public static final String db_alarms_time = "Alarms_Time";
     public static final String db_alarms_date = "Alarms_Date";
-    public static final String db_alarms_freq = "Alarms_Frequency";
+    public static final String db_alarms_session = "Alarms_Session";
     public static final String db_alarms_status = "Alarms_Status";
 
     public static final String db_logs= "Med_Logs";
@@ -47,11 +45,10 @@ public class SQLiteHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
 
         String create_db_meds = "CREATE TABLE "+db_med_db+" ( "+db_med_id+" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "+db_med_name+" VARCHAR NOT NULL, " +
-                ""+db_med_dose+" DOUBLE NOT NULL, "+db_med_morning+" BOOLEAN NOT NULL, "+db_med_noon+" BOOLEAN NOT NULL, "+db_med_evening+" BOOLEAN NOT NULL, " +
-                ""+db_med_quant+" DOUBLE NOT NULL, "+db_med_deduct+" DOUBLE NOT NULL)";
+                ""+db_med_dose+" DOUBLE NOT NULL, "+db_med_freq+" VARCHAR NOT NULL, "+db_med_quant+" DOUBLE NOT NULL, "+db_med_deduct+" DOUBLE NOT NULL)";
 
         String create_db_alarms = "CREATE TABLE "+db_alarms+" ( "+db_alarms_id+" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "+db_alarm_med_id+" INTEGER NOT NULL, " +
-                ""+db_alarms_time+" VARCHAR NOT NULL, "+db_alarms_date+" VARCHAR NOT NULL, "+db_alarms_freq+" VARCHAR NOT NULL, "+db_alarms_status+" VARCHAR NOT NULL)";
+                ""+db_alarms_time+" VARCHAR NOT NULL, "+db_alarms_date+" VARCHAR NOT NULL, "+db_alarms_session+" VARCHAR NOT NULL, "+db_alarms_status+" VARCHAR NOT NULL)";
 
 
         sqLiteDatabase.execSQL(create_db_meds);

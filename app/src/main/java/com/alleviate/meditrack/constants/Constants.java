@@ -43,4 +43,11 @@ public class Constants {
     public static final String sp_first_install_tutorial_Yes = "Medi_Tutorial_Yes";
     public static final String sp_first_install_tutorial_No = "Medi_Tutorial_No";
 
+    public static final String db_alarm_status_enabled = "Enabled";
+    public static final String db_alarm_status_disabled = "Disabled";
+
+    public static final String[] db_dose_session = {"Morning", "Noon", "Night"};
+
+
+
 }

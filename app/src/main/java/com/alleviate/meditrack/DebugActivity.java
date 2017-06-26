@@ -120,7 +120,7 @@ public class DebugActivity extends AppCompatActivity {
                             cur.getInt(cur.getColumnIndex(SQLiteHelper.db_alarm_med_id))+"] - "+
                             cur.getString(cur.getColumnIndex(SQLiteHelper.db_alarms_time))+" - "+
                             cur.getString(cur.getColumnIndex(SQLiteHelper.db_alarms_date))+" - "+
-                            cur.getString(cur.getColumnIndex(SQLiteHelper.db_alarms_freq))+" - "+
+                            cur.getString(cur.getColumnIndex(SQLiteHelper.db_alarms_session))+" - "+
                             cur.getString(cur.getColumnIndex(SQLiteHelper.db_alarms_status))+"\n"
                     );
 
@@ -143,10 +143,8 @@ public class DebugActivity extends AppCompatActivity {
                     debug_info.append(
                         cur.getInt(cur.getColumnIndex(SQLiteHelper.db_med_id))+") "+
                         cur.getString(cur.getColumnIndex(SQLiteHelper.db_med_name))+" - "+
-                        cur.getDouble(cur.getColumnIndex(SQLiteHelper.db_med_dose))+" - ("+
-                        cur.getInt(cur.getColumnIndex(SQLiteHelper.db_med_morning))+" | "+
-                        cur.getInt(cur.getColumnIndex(SQLiteHelper.db_med_noon))+" | "+
-                        cur.getInt(cur.getColumnIndex(SQLiteHelper.db_med_evening))+") - "+
+                        cur.getDouble(cur.getColumnIndex(SQLiteHelper.db_med_dose))+" - "+
+                        cur.getString(cur.getColumnIndex(SQLiteHelper.db_med_freq))+" - "+
                         cur.getDouble(cur.getColumnIndex(SQLiteHelper.db_med_quant))+" - "+
                         cur.getDouble(cur.getColumnIndex(SQLiteHelper.db_med_deduct))+" \n "
                     );
