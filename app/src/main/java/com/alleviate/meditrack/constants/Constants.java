@@ -31,4 +31,16 @@ public class Constants {
     public static final String date_display_month = "dd MMM";
     public static final String date_weekday_display = "d MMM, EEEE";
 
+
+    public static final String sp_medi_file = "Medi_Pref";
+    public static final String sp_medi_first_install = "Medi_First_Install";
+    public static final String sp_medi_first_install_Yes = "Medi_First_Install_Yes";
+    public static final String sp_medi_first_install_No = "Medi_First_Install_No";
+    public static final String sp_parent_alarm_date_key = "Medi_Parent_Alarm_Date";
+    public static final String sp_alarm_reset_yes = "Medi_Alarm_Reset_All_Yes";
+    public static final String sp_alarm_reset_no = "Medi_Alarm_Reset_All_No";
+    public static final String sp_first_install_tutorial = "Medi_Tutorial";
+    public static final String sp_first_install_tutorial_Yes = "Medi_Tutorial_Yes";
+    public static final String sp_first_install_tutorial_No = "Medi_Tutorial_No";
+
 }

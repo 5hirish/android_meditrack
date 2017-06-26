@@ -46,10 +46,6 @@
             android:enabled="true"
             android:exported="false" />
         <receiver
-            android:name=".alarms.AlarmRemind"
-            android:enabled="true"
-            android:exported="false" />
-        <receiver
             android:name=".broadcast_receivers.BootReceiver"
             android:enabled="true"
             android:exported="false">

@@ -11,8 +11,11 @@ import android.util.Log;
 
 import com.alleviate.meditrack.alarms.AlarmSetter;
 import com.alleviate.meditrack.constants.Constants;
+import com.alleviate.meditrack.db.SQLiteHelper;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -21,14 +24,44 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        SharedPreferences parent_alarm_sp = getSharedPreferences("Medi", MODE_PRIVATE);
-        String first_install = parent_alarm_sp.getString("FI", "Yes");
+        SharedPreferences parent_alarm_sp = getSharedPreferences(Constants.sp_medi_file, MODE_PRIVATE);
+        String first_install = parent_alarm_sp.getString(Constants.sp_medi_first_install, Constants.sp_medi_first_install_Yes);
+        String parent_alarm_date = parent_alarm_sp.getString(Constants.sp_parent_alarm_date_key, Constants.sp_alarm_reset_no);
+        String first_install_tutorial = parent_alarm_sp.getString(Constants.sp_first_install_tutorial, Constants.sp_first_install_tutorial_Yes);
 
-        if (first_install.equals("Yes")) {
+        SimpleDateFormat std_date = new SimpleDateFormat(Constants.date_std);
+        String today_date = std_date.format(new Date());
+
+
+        if (first_install.equals(Constants.sp_medi_first_install_Yes)) {
 
             set_parent_alarm();
-            parent_alarm_sp.edit().putString("FI", "No").apply();
+            parent_alarm_sp.edit().putString(Constants.sp_medi_first_install, Constants.sp_medi_first_install_No).apply();
         }
+
+        if (!parent_alarm_date.equals(today_date) && !first_install.equals(Constants.sp_medi_first_install_Yes)) {
+
+            set_parent_alarm();
+            parent_alarm_sp.edit().putString(Constants.sp_parent_alarm_date_key, today_date).apply();
+        }
+
+        /* if (first_install_tutorial.equals(Constants.sp_first_install_tutorial_Yes)){
+
+            parent_alarm_sp.edit().putString(Constants.sp_first_install_tutorial, Constants.sp_first_install_tutorial_No).apply();
+
+            Intent in_back = new Intent(MainActivity.this, DashboardActivity.class);
+            startActivity(in_back);
+
+            Intent in = new Intent(MainActivity.this, HelpActivity.class);
+            startActivity(in);
+            finish();
+
+        } else {
+
+            Intent in = new Intent(MainActivity.this, DashboardActivity.class);
+            startActivity(in);
+            finish();
+        } */
 
         Intent in = new Intent(MainActivity.this, DashboardActivity.class);
         startActivity(in);
@@ -52,8 +85,8 @@ public class MainActivity extends AppCompatActivity {
         parent_alarm.setInexactRepeating(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), AlarmManager.INTERVAL_DAY, parent_pending_intent);
 
         Log.d("Medi:ParentAlarm", "Parent Alarm Set Id " + parent_id);
-        /*if (Constants.debug_flag) {
-            SQLiteHelper.insert_log("DayMan:ParentAlarm - Alarm (" + parent_id + ") created - " + Calendar.getInstance().getTime(), getApplicationContext());
-        }*/
+        if (Constants.debug_flag) {
+            SQLiteHelper.insert_log("Medi:ParentAlarm - Alarm (" + parent_id + ") created - " + Calendar.getInstance().getTime(), getApplicationContext());
+        }
     }
 }
