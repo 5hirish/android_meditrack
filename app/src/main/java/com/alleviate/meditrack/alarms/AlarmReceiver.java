@@ -52,7 +52,7 @@ public class AlarmReceiver extends BroadcastReceiver{
         queryBuilder.setTables(SQLiteHelper.db_alarms +" INNER JOIN "+ SQLiteHelper.db_med_db +" ON "+SQLiteHelper.db_alarm_med_id+" = "+SQLiteHelper.db_med_id);
         Cursor cursor = queryBuilder.query(dbr, null, SQLiteHelper.db_alarms_id+" = ? ", new String[] { ""+alarm_id}, null, null, null);
 
-        String med_name = "", med_dose = "", alarm_freq = "", alarm_date = "", alarm_status = "";
+        String med_name = "", med_dose = "", alarm_freq = "", alarm_date = "", alarm_status = "", alarm_session = "";
         int med_id = 0;
 
         if(cursor != null){
@@ -62,9 +62,11 @@ public class AlarmReceiver extends BroadcastReceiver{
                 med_name = cursor.getString(cursor.getColumnIndex(SQLiteHelper.db_med_name));
                 med_dose = cursor.getString(cursor.getColumnIndex(SQLiteHelper.db_med_dose));
 
+
                 alarm_freq = cursor.getString(cursor.getColumnIndex(SQLiteHelper.db_alarms_freq));
                 alarm_date = cursor.getString(cursor.getColumnIndex(SQLiteHelper.db_alarms_date));
                 alarm_status = cursor.getString(cursor.getColumnIndex(SQLiteHelper.db_alarms_status));
+                alarm_session = cursor.getString(cursor.getColumnIndex(SQLiteHelper.db_alarms_session));
 
             }cursor.close();
         }
@@ -74,7 +76,7 @@ public class AlarmReceiver extends BroadcastReceiver{
         notification_builder.setTicker(med_name);
         notification_builder.setContentTitle(med_name);
 
-        notification_builder.setContentText("Dosage: "+med_dose+" tablets.");
+        notification_builder.setContentText(alarm_session+" Dosage: "+med_dose+" tablets.");
 
 
         Intent notification_cancel_intent = new Intent(context, CancelReceiver.class);

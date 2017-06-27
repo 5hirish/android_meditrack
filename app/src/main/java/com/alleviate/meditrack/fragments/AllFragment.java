@@ -3,27 +3,28 @@ package com.alleviate.meditrack.fragments;
 
 import android.app.SearchManager;
 import android.content.Context;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteQueryBuilder;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.MenuItemCompat;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.alleviate.meditrack.R;
 import com.alleviate.meditrack.adapter.TodayMedicineAdapter;
+import com.alleviate.meditrack.db.SQLiteHelper;
 import com.alleviate.meditrack.models.MedicineInfo;
 
 import java.util.ArrayList;
@@ -60,21 +61,32 @@ public class AllFragment extends Fragment {
 
         medicineInfos = new ArrayList<MedicineInfo>();
 
-        for(int i = 0; i < 2; i ++){
-            medicineInfos.add(new MedicineInfo("CP4-"+i, 1.0, "03:00"));
-        }
+        SQLiteHelper db = new SQLiteHelper(getActivity());
+        SQLiteDatabase dbr = db.getReadableDatabase();
 
-        for(int i = 0; i < 3; i ++){
-            medicineInfos.add(new MedicineInfo("AP4-"+i, 1.0, "03:00"));
-        }
+        SQLiteQueryBuilder queryBuilder = new SQLiteQueryBuilder();
 
-        for(int i = 0; i < 2; i ++){
-            medicineInfos.add(new MedicineInfo("QN1-"+i, 1.0, "03:00"));
-        }
+        queryBuilder.setTables(SQLiteHelper.db_alarms +" INNER JOIN "+ SQLiteHelper.db_med_db +" ON "+SQLiteHelper.db_alarm_med_id+" = "+SQLiteHelper.db_med_id);
 
-        for(int i = 0; i < 2; i ++){
-            medicineInfos.add(new MedicineInfo("KO-"+i, 1.0, "03:00"));
+        Cursor cursor = queryBuilder.query(dbr, null, null, null, null, null, null);
+
+        //Toast.makeText(getActivity(),"Count "+cursor.getCount(),Toast.LENGTH_SHORT).show();
+
+        if(cursor != null){
+            while (cursor.moveToNext()){
+
+                int med_id = cursor.getInt(cursor.getColumnIndex(SQLiteHelper.db_med_id));
+                String med_name = cursor.getString(cursor.getColumnIndex(SQLiteHelper.db_med_name));
+                double med_prescription = cursor.getDouble(cursor.getColumnIndex(SQLiteHelper.db_med_dose));
+                String med_time = cursor.getString(cursor.getColumnIndex(SQLiteHelper.db_alarms_time));
+                String alarm_session = cursor.getString(cursor.getColumnIndex(SQLiteHelper.db_alarms_session));
+
+                medicineInfos.add(new MedicineInfo(med_name, med_prescription, med_time, alarm_session));
+
+            }cursor.close();
         }
+        dbr.close();
+        db.close();
 
         Collections.sort(medicineInfos, new Comparator<MedicineInfo>() {
             @Override

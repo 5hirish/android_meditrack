@@ -10,9 +10,13 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.alleviate.meditrack.R;
+import com.alleviate.meditrack.constants.Constants;
 import com.alleviate.meditrack.models.MedicineInfo;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 /**
  * Created by Shirish Kadam on 23/6/17.
@@ -39,9 +43,41 @@ public class TodayMedicineAdapter extends RecyclerView.Adapter<TodayMedicineAdap
     @Override
     public void onBindViewHolder(TodayMedicineAdapter.ViewHolder holder, int position) {
 
+        double dosage = medicineInfos.get(position).medicine_dose;
+        String str_dose = "", str_time = "";
+
+        if (dosage == 0.5) {
+            str_dose = "1/2 tablet";
+
+        } else if (dosage == 1.0) {
+            str_dose = "1 tablet";
+
+        } else if (dosage == 1.5) {
+            str_dose = "1 & 1/2 tablets";
+
+        } else if (dosage == 2.0) {
+            str_dose = "2 tablets";
+
+        } else {
+            str_dose = "1 tablet";
+        }
+
+        SimpleDateFormat sdf = new SimpleDateFormat(Constants.time_12hr);
+        SimpleDateFormat sdf_std = new SimpleDateFormat(Constants.time_std);
+        Calendar cal = Calendar.getInstance();
+        try {
+            cal.setTime(sdf_std.parse(medicineInfos.get(position).medicine_remind_time));
+            str_time = sdf.format(cal.getTime());
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        String meds_session = medicineInfos.get(position).medicine_session;
+
         ((TextView) holder.itemView.findViewById(R.id.medicine_name)).setText(medicineInfos.get(position).medicine_name);
-        ((TextView) holder.itemView.findViewById(R.id.medicine_time)).setText(medicineInfos.get(position).medicine_remind_time);
-        ((TextView) holder.itemView.findViewById(R.id.medicine_dose)).setText(String.valueOf(medicineInfos.get(position).medicine_dose));
+        ((TextView) holder.itemView.findViewById(R.id.medicine_time)).setText(meds_session+": "+str_time);
+        ((TextView) holder.itemView.findViewById(R.id.medicine_dose)).setText(str_dose);
 
         ((RelativeLayout) holder.itemView.findViewById(R.id.medicine_layout)).setOnClickListener(new View.OnClickListener() {
             @Override
