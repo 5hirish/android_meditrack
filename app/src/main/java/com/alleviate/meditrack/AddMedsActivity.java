@@ -65,7 +65,7 @@ public class AddMedsActivity extends AppCompatActivity {
         final TextView tv_med_dose_night_time = (TextView)findViewById(R.id.evening_time);
         final TextView tv_med_dose_quant = (TextView)findViewById(R.id.dose_quant);
         final EditText et_med_dose_total = (EditText)findViewById(R.id.total_dose);
-        final TextView tv_debug_info = (TextView)findViewById(R.id.debug_01);
+        //final TextView tv_debug_info = (TextView)findViewById(R.id.debug_01);
 
         Calendar calendar = Calendar.getInstance();
         SimpleDateFormat time_12hr = new SimpleDateFormat(Constants.time_12hr);
@@ -197,8 +197,8 @@ public class AddMedsActivity extends AppCompatActivity {
 
                 }
 
-                tv_debug_info.setText("Name: "+db_meds_name+"\nFrequency: "+db_meds_dose_freq+"\nPrescription: "+db_meds_prescription+
-                        "\nMorning: "+db_meds_time[0]+", Noon: "+db_meds_time[1]+", Night: "+db_meds_time[2]+"\nQuantity: "+db_meds_quantity+"\nDeducts:");
+                //tv_debug_info.setText("Name: "+db_meds_name+"\nFrequency: "+db_meds_dose_freq+"\nPrescription: "+db_meds_prescription+
+                  //      "\nMorning: "+db_meds_time[0]+", Noon: "+db_meds_time[1]+", Night: "+db_meds_time[2]+"\nQuantity: "+db_meds_quantity+"\nDeducts:");
 
             }
         });

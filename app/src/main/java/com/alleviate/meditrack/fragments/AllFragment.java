@@ -166,7 +166,7 @@ public class AllFragment extends Fragment {
             }
         }
 
-        Toast.makeText(getActivity(),"Size:"+medicine_results.size()+" Query:"+query,Toast.LENGTH_SHORT).show();
+        //Toast.makeText(getActivity(),"Size:"+medicine_results.size()+" Query:"+query,Toast.LENGTH_SHORT).show();
 
         rvadpter = new TodayMedicineAdapter(getActivity(), medicine_results);
         rv.setAdapter(rvadpter);
