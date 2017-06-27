@@ -40,6 +40,7 @@ public class Constants {
     public static final String sp_medi_first_install_Yes = "Medi_First_Install_Yes";
     public static final String sp_medi_first_install_No = "Medi_First_Install_No";
     public static final String sp_parent_alarm_date_key = "Medi_Parent_Alarm_Date";
+    public static final String sp_alarm_reset = "Medi_Alarm_reset";
     public static final String sp_alarm_reset_yes = "Medi_Alarm_Reset_All_Yes";
     public static final String sp_alarm_reset_no = "Medi_Alarm_Reset_All_No";
     public static final String sp_first_install_tutorial = "Medi_Tutorial";
@@ -50,6 +51,7 @@ public class Constants {
     public static final String sp_user_gender = "Medi_User_Gender";
     public static final String sp_sos_name = "Medi_Sos_Name";
     public static final String sp_sos_number = "Medi_Sos_Number";
+    public static final String power_saver_mode = "Power_Saver";
 
 
 
@@ -66,5 +68,12 @@ public class Constants {
 
     public static final String meds_freq_daily = "Daily Dose";
     public static final String meds_freq_weekly = "Weekly Dose";
+
+    /* Device Manufacturers { Devices can be added here } */
+
+    public static final String asus_man = "asus";
+    public static final String samsung_man = "samsung";
+    public static final String xiaomi_man = "xiaomi";
+    public static final String huawei_man = "huawei";
 
 }

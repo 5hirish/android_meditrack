@@ -70,4 +70,21 @@
     <string name="total_dose_quantity">Total Dose Quantity:</string>
     <string name="edit_user_details">Edit User Details</string>
 
+    <string name="enable_background_info">Now a days devices are coming with more security in context of Battery power consumption.
+        By default device keep almost all apps in power saving mode.
+        \nIt means in some devices your background services (Location, Alarm Manager) won\'t work in the background, in some devices background tasks won\'t work after a battery threshold limit (like 15%) .
+        \nSo you need to exclude MediTrack from this battery saving mode to execute smoothly even in background.
+    </string>
+
+    <string name="more_info">You can do this for different manufacturer as ..
+        1. For Xiomi —> Go to the battery -> Power —> App battery saver —> MediTrack —> Now select "No restrictions" (for Background settings) then Allow option for Background location
+        —> To AutoStart your app after Boot —> Go to the Security app —> permissions —> Auto start and check your app.
+        2. For Samsung —> Go to the Samsung Smart Manager app —> Battery —> Detail (App power saving panel) —> click MediTrack and select disable.
+        For other devices there should be same power options either in settings option directly or some app is installed by default to handle it.</string>
+
+    <string name="why_to_enable_mediTrack_to_execute_as_background_service">Why to enable MediTrack to execute as Background Service ?</string>
+    <string name="medi_power_saving">MediTrack Power Saving</string>
+    <string name="power_saving_desp">Disable Power Saving mode for MediTrack to work. Allow it to execute as Background Service</string>
+
+
 </resources>

@@ -220,7 +220,7 @@ public class AddMedsActivity extends AppCompatActivity {
 
         AlertDialog.Builder rateapp = new AlertDialog.Builder(AddMedsActivity.this);
         rateapp.setMessage(getString(R.string.expiry_message));
-        rateapp.setTitle(getString(R.string.app_name));
+        rateapp.setTitle(getString(R.string.expiry_title));
 
         rateapp.setPositiveButton(getString(R.string.dialogue_ok), new DialogInterface.OnClickListener() {
             @Override

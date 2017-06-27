@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_compability"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.alleviate.meditrack.CompatibilityActivity">
+
+    <TextView
+        android:text="@string/why_to_enable_mediTrack_to_execute_as_background_service"
+        android:textAlignment="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:textSize="16sp"
+        android:layout_marginTop="10dp"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:id="@+id/setting_title" />
+
+    <TextView
+        android:text="@string/enable_background_info"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:maxLines="6"
+        android:textSize="16sp"
+        android:padding="16dp"
+        android:scrollbars="vertical"
+        android:textAlignment="center"
+        android:id="@+id/setting_info"
+        android:layout_below="@+id/setting_title"
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        android:text="System Settings"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/settings"
+        android:background="@color/colorAccent"
+        android:textColor="@android:color/white"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    <ImageView
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        app:srcCompat="@drawable/compability"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/compat_img"
+        android:layout_above="@+id/settings" />
+</RelativeLayout>

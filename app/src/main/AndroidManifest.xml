@@ -45,6 +45,9 @@
             android:name=".DebugActivity"
             android:label="Debug"
             android:parentActivityName=".DashboardActivity" />
+        <activity android:name=".TutorialActivity"></activity>
+        <activity android:name=".CompatibilityActivity"></activity>
+
 
         <receiver
             android:name=".alarms.AlarmSetter"
@@ -71,7 +74,6 @@
             </intent-filter>
         </receiver>
 
-        <activity android:name=".TutorialActivity"></activity>
     </application>
 
 </manifest>
