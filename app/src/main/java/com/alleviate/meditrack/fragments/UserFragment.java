@@ -182,7 +182,7 @@ public class UserFragment extends Fragment {
         et_user_age.setText(parent_alarm_sp.getInt(Constants.sp_user_age,0)+"");
         user_gender = parent_alarm_sp.getString(Constants.sp_user_gender,"");
 
-        ArrayAdapter gender_adapter = ArrayAdapter.createFromResource(getActivity(), R.array.gender, android.R.layout.simple_spinner_item);
+        ArrayAdapter gender_adapter = ArrayAdapter.createFromResource(getActivity(), R.array.gender, R.layout.spinner_layout);
         sp_user_gender.setAdapter(gender_adapter);
 
         switch (user_gender) {

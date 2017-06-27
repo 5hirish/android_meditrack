@@ -72,6 +72,7 @@
         android:text="Save"
         android:background="@color/colorAccent"
         android:textColor="@android:color/white"
+        android:layout_marginBottom="@dimen/dime16"
         android:id="@+id/save_user"
         android:layout_marginTop="@dimen/dime16"
         android:layout_below="@+id/user_age"

@@ -55,6 +55,7 @@
         android:textColor="@android:color/white"
         android:id="@+id/save_user"
         android:layout_marginTop="@dimen/dime16"
+        android:layout_marginBottom="@dimen/dime16"
         android:layout_below="@+id/contact_number"
         android:layout_alignRight="@+id/contact_number"
         android:layout_alignEnd="@+id/contact_number" />

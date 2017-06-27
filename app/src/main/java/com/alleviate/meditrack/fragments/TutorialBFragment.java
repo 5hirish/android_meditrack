@@ -42,7 +42,7 @@ public class TutorialBFragment extends Fragment {
         Spinner sp_user_gender = (Spinner) frag_view.findViewById(R.id.user_gender);
         Button save_details = (Button) frag_view.findViewById(R.id.save_user);
 
-        ArrayAdapter gender_adapter = ArrayAdapter.createFromResource(getActivity(), R.array.gender, android.R.layout.simple_spinner_item);
+        ArrayAdapter gender_adapter = ArrayAdapter.createFromResource(getActivity(), R.array.gender, R.layout.spinner_layout);
         sp_user_gender.setAdapter(gender_adapter);
 
         sp_user_gender.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
