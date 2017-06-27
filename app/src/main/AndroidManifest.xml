@@ -40,8 +40,10 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.alleviate.meditrack.DashboardActivity" />
         </activity>
-
-        <activity android:name=".DebugActivity" android:label="Debug" android:parentActivityName=".DashboardActivity"/>
+        <activity
+            android:name=".DebugActivity"
+            android:label="Debug"
+            android:parentActivityName=".DashboardActivity" />
 
         <receiver
             android:name=".alarms.AlarmSetter"
@@ -68,6 +70,7 @@
             </intent-filter>
         </receiver>
 
+        <activity android:name=".TutorialActivity"></activity>
     </application>
 
 </manifest>

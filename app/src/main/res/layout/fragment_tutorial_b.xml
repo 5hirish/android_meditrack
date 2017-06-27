@@ -1,0 +1,70 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.alleviate.meditrack.fragments.TutorialBFragment">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Add Your Details"
+            android:textSize="20sp"
+            android:layout_marginBottom="70dp"
+            android:layout_alignBottom="@+id/user_name"
+            android:layout_centerHorizontal="true" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/user_name"
+            android:hint="Your Name"
+            android:layout_marginTop="180dp"
+            android:layout_marginLeft="@dimen/dime32"
+            android:layout_marginRight="@dimen/dime32"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Gender: "
+            android:textSize="18sp"
+            android:id="@+id/textView"
+            android:layout_above="@+id/save_user"
+            android:layout_alignLeft="@+id/user_name"
+            android:layout_alignStart="@+id/user_name" />
+
+        <android.support.v7.widget.AppCompatSpinner
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:id="@+id/user_gender"
+            android:layout_alignBottom="@+id/textView"
+            android:layout_toRightOf="@+id/textView"
+            android:layout_toEndOf="@+id/textView" />
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="Your Age"
+            android:id="@+id/user_age"
+            android:layout_marginTop="@dimen/dime16"
+            android:inputType="number"
+            android:layout_below="@+id/user_name"
+            android:layout_alignRight="@+id/user_name"
+            android:layout_alignEnd="@+id/user_name" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Save"
+            android:id="@+id/save_user"
+            android:layout_below="@+id/user_age"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="17dp" />
+
+    </RelativeLayout>
+
+</FrameLayout>
