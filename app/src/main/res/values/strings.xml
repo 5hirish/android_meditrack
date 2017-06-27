@@ -9,6 +9,12 @@
     <string name="menu_about">About</string>
     <string name="menu_search">Search</string>
 
+    <string-array name="gender">
+        <item>Female</item>
+        <item>Male</item>
+        <item>Others</item>
+    </string-array>
+
     <string name="search_hint">Search Medicines</string>
 
     <string name="select_meds_dose_prescription">Select Dose Prescription</string>

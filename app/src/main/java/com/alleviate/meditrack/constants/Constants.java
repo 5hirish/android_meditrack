@@ -42,6 +42,13 @@ public class Constants {
     public static final String sp_first_install_tutorial = "Medi_Tutorial";
     public static final String sp_first_install_tutorial_Yes = "Medi_Tutorial_Yes";
     public static final String sp_first_install_tutorial_No = "Medi_Tutorial_No";
+    public static final String sp_user_name = "Medi_User_Name";
+    public static final String sp_user_age = "Medi_User_Age";
+    public static final String sp_user_gender = "Medi_User_Gender";
+    public static final String sp_sos_name = "Medi_Sos_Name";
+    public static final String sp_sos_number = "Medi_Sos_Number";
+
+
 
     public static final String db_alarm_status_enabled = "Enabled";
     public static final String db_alarm_status_disabled = "Disabled";

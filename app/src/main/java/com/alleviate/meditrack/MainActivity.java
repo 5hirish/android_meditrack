@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
             parent_alarm_sp.edit().putString(Constants.sp_parent_alarm_date_key, today_date).apply();
         }
 
-        /*if (first_install_tutorial.equals(Constants.sp_first_install_tutorial_Yes)){
+        if (first_install_tutorial.equals(Constants.sp_first_install_tutorial_Yes)){
 
             parent_alarm_sp.edit().putString(Constants.sp_first_install_tutorial, Constants.sp_first_install_tutorial_No).apply();
 
@@ -61,16 +61,7 @@ public class MainActivity extends AppCompatActivity {
             Intent in = new Intent(MainActivity.this, DashboardActivity.class);
             startActivity(in);
             finish();
-        }*/
-
-        Intent in = new Intent(MainActivity.this, TutorialActivity.class);
-        startActivity(in);
-        finish();
-
-
-        /*Intent in = new Intent(MainActivity.this, DashboardActivity.class);
-        startActivity(in);
-        finish();*/
+        }
     }
 
     private void set_parent_alarm() {

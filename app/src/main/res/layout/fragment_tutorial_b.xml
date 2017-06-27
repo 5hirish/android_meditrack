@@ -41,6 +41,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="8dp"
             android:id="@+id/user_gender"
+            android:entries="@array/gender"
             android:layout_alignBottom="@+id/textView"
             android:layout_toRightOf="@+id/textView"
             android:layout_toEndOf="@+id/textView" />

@@ -12,10 +12,11 @@ import com.alleviate.meditrack.fragments.TutorialAFragment;
 import com.alleviate.meditrack.fragments.TutorialBFragment;
 import com.alleviate.meditrack.fragments.TutorialCFragment;
 
-public class TutorialActivity extends AppCompatActivity {
+
+public class TutorialActivity extends AppCompatActivity{
 
     static int num_pages = 3;
-    ViewPager viewPager;
+    static ViewPager viewPager;
     PagerAdapter pagerAdapter;
 
     @Override
@@ -40,8 +41,12 @@ public class TutorialActivity extends AppCompatActivity {
         }
     }
 
+    public static void flipPage() {
+        viewPager.setCurrentItem(viewPager.getCurrentItem() + 1);
+    }
+
     private class TutorialPagerAdapter extends FragmentStatePagerAdapter {
-        public TutorialPagerAdapter(FragmentManager fm) {
+        TutorialPagerAdapter(FragmentManager fm) {
             super(fm);
         }
 
