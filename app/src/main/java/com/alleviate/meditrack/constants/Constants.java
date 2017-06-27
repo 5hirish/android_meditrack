@@ -13,6 +13,9 @@ public class Constants {
     public static final int reminder_alarm_id = 983546;
     public static final int protocol_alarm_id = 983547;
 
+    public static final int  REQUEST_CODE = 40;
+
+
     public static final boolean debug_flag = true;
 
 
