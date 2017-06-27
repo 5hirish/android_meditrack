@@ -13,6 +13,7 @@
             android:layout_height="wrap_content"
             android:text="Add SOS Contact"
             android:textSize="20sp"
+            android:textColor="@color/textPrimary"
             android:layout_above="@+id/contact_number"
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="70dp" />
@@ -42,6 +43,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Add SOS"
+            android:background="@color/colorAccent"
+            android:textColor="@android:color/white"
             android:id="@+id/save_sos"
             android:layout_below="@+id/contact_number"
             android:layout_centerHorizontal="true"

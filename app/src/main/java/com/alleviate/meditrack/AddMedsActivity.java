@@ -4,16 +4,20 @@ import android.app.AlarmManager;
 import android.app.AlertDialog;
 import android.app.PendingIntent;
 import android.app.TimePickerDialog;
+import android.content.ActivityNotFoundException;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -31,6 +35,7 @@ import android.widget.Toast;
 import com.alleviate.meditrack.alarms.AlarmReceiver;
 import com.alleviate.meditrack.constants.Constants;
 import com.alleviate.meditrack.db.SQLiteHelper;
+import com.alleviate.meditrack.fragments.AllFragment;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -190,6 +195,13 @@ public class AddMedsActivity extends AppCompatActivity {
 
                         Toast.makeText(getApplicationContext()," Reminder Set", Toast.LENGTH_SHORT).show();
 
+                        alert_expiry_date();
+
+                        DashboardActivity.mSectionsPagerAdapter.notifyDataSetChanged();
+                        AllFragment.rvadpter.notifyDataSetChanged();
+
+
+
                     } else {
                         Snackbar.make(view, db_meds_name+" is already added!", Snackbar.LENGTH_LONG).show();
 
@@ -202,6 +214,25 @@ public class AddMedsActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    private void alert_expiry_date() {
+
+        AlertDialog.Builder rateapp = new AlertDialog.Builder(AddMedsActivity.this);
+        rateapp.setMessage(getString(R.string.expiry_message));
+        rateapp.setTitle(getString(R.string.app_name));
+
+        rateapp.setPositiveButton(getString(R.string.dialogue_ok), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+
+            finish();
+            }
+        });
+
+        AlertDialog rate_app_dialogue = rateapp.create();
+        rate_app_dialogue.show();
+
     }
 
     private boolean check_medicine_name(String db_meds_name) {

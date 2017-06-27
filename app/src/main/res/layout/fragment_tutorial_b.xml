@@ -13,6 +13,7 @@
             android:layout_height="wrap_content"
             android:text="Add Your Details"
             android:textSize="20sp"
+            android:textColor="@color/textPrimary"
             android:layout_marginBottom="70dp"
             android:layout_alignBottom="@+id/user_name"
             android:layout_centerHorizontal="true" />
@@ -22,6 +23,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/user_name"
             android:hint="Your Name"
+            android:textColor="@color/textPrimary"
             android:layout_marginTop="180dp"
             android:layout_marginLeft="@dimen/dime32"
             android:layout_marginRight="@dimen/dime32"/>
@@ -30,6 +32,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Gender: "
+            android:textColor="@color/textPrimary"
             android:textSize="18sp"
             android:id="@+id/textView"
             android:layout_above="@+id/save_user"
@@ -61,6 +64,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Save"
+            android:background="@color/colorAccent"
+            android:textColor="@android:color/white"
             android:id="@+id/save_user"
             android:layout_below="@+id/user_age"
             android:layout_centerHorizontal="true"

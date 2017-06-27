@@ -37,7 +37,7 @@ import java.util.Comparator;
 public class AllFragment extends Fragment {
 
     private SearchView searchView = null;
-    private RecyclerView.Adapter rvadpter;
+    public static RecyclerView.Adapter rvadpter;
     ArrayList<MedicineInfo> medicineInfos;
     RecyclerView rv;
 

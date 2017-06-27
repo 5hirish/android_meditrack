@@ -57,6 +57,9 @@
         <item>2 tablets</item>
     </string-array>
 
+    <string name="app_descp">Track your medicines and dosage. Never forget or skip your medicines</string>
+    <string name="expiry_message">Please, check the expiry date of the medicine.</string>
+    <string name="expiry_title">Check Expiry Date</string>
 
     <string name="title_activity_add_meds">Add Medicine</string>
 
