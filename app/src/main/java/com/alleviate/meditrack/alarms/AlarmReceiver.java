@@ -12,6 +12,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteQueryBuilder;
 import android.media.RingtoneManager;
 import android.net.Uri;
+import android.os.Build;
 import android.support.v4.app.NotificationCompat;
 
 import com.alleviate.meditrack.DashboardActivity;
@@ -39,9 +40,13 @@ public class AlarmReceiver extends BroadcastReceiver{
 
         notification_builder.setSmallIcon(R.drawable.ic_notification);
         notification_builder.setAutoCancel(true);
-        notification_builder.setCategory(Notification.CATEGORY_ALARM);
-        notification_builder.setPriority(Notification.PRIORITY_HIGH);
-        notification_builder.setVisibility(Notification.VISIBILITY_PUBLIC);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+
+            notification_builder.setCategory(Notification.CATEGORY_ALARM);
+            notification_builder.setPriority(Notification.PRIORITY_HIGH);
+            notification_builder.setVisibility(Notification.VISIBILITY_PUBLIC);
+        }
 
         Uri alert = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
         notification_builder.setSound(alert);
@@ -103,7 +108,7 @@ public class AlarmReceiver extends BroadcastReceiver{
         notification_cancel_intent.putExtra(Constants.in_notify_alarm_date, alarm_date);
 
         PendingIntent notification_cancel_pendingIntent = PendingIntent.getBroadcast(context, alarm_id, notification_cancel_intent,PendingIntent.FLAG_UPDATE_CURRENT);
-        notification_builder.addAction(R.drawable.ic_done_24dp, context.getString(R.string.notify_done), notification_cancel_pendingIntent);
+        notification_builder.addAction(R.drawable.ic_done_notification, context.getString(R.string.notify_done), notification_cancel_pendingIntent);
 
         Intent notification_intent = new Intent(context, DashboardActivity.class);
 

@@ -13,6 +13,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.media.RingtoneManager;
 import android.net.Uri;
+import android.os.Build;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
@@ -214,7 +215,10 @@ public class AlarmSetter extends BroadcastReceiver {
 
         Uri alert = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         nb.setSound(alert);
-        nb.setCategory(Notification.CATEGORY_STATUS);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            nb.setCategory(Notification.CATEGORY_STATUS);
+        }
 
         Intent notify_in = new Intent(context, DashboardActivity.class);
 

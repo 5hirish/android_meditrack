@@ -14,6 +14,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -285,8 +286,6 @@ public class AddMedsActivity extends AppCompatActivity {
 
                 final Calendar cal_now = Calendar.getInstance();                                                        // Today Time Parse
 
-                Log.d("Medi:Check",cal_now.getTime() + " before " + cal_meds_time.getTime());
-
                 final int pos = i;
                 InsertAlarm insertAlarm = new InsertAlarm(new AlarmAsyncResponse() {
                     @Override
@@ -531,7 +530,15 @@ public class AddMedsActivity extends AppCompatActivity {
 
         AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
 
-        alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, alarm_time.getTimeInMillis(), 0, alarm_pending_intent);
+        if (Build.VERSION.SDK_INT >= 19) {
+
+            alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, alarm_time.getTimeInMillis(), 0, alarm_pending_intent);
+
+        } else {
+
+            alarmManager.set(AlarmManager.RTC_WAKEUP, alarm_time.getTimeInMillis(), alarm_pending_intent);
+        }
+
 
         Log.d("Medi:Alarm","Set Alarm : "+alarm_id+" at "+ alarm_time.getTime());
 
@@ -541,3 +548,16 @@ public class AddMedsActivity extends AppCompatActivity {
 
     }
 }
+
+/*
+if (Build.VERSION.SDK_INT >= 23) {
+// Wakes up the device in Doze Mode
+am.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, time, pending);
+} else if (Build.VERSION.SDK_INT >= 19) {
+// Wakes up the device in Idle Mode
+am.setExact(AlarmManager.RTC_WAKEUP, time, pending);
+} else {
+// Old APIs
+am.set(AlarmManager.RTC_WAKEUP, time, pending);
+}
+* */

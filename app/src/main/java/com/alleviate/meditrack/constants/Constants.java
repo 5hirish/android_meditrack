@@ -16,7 +16,7 @@ public class Constants {
     public static final int  REQUEST_CODE = 40;
 
 
-    public static final boolean debug_flag = false;
+    public static final boolean debug_flag = true;
 
 
     public static final int num_tab = 3;
