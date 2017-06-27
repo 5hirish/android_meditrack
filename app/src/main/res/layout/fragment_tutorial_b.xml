@@ -35,6 +35,7 @@
             android:textColor="@color/textPrimary"
             android:textSize="18sp"
             android:id="@+id/textView"
+            android:layout_marginBottom="10dp"
             android:layout_above="@+id/save_user"
             android:layout_alignLeft="@+id/user_name"
             android:layout_alignStart="@+id/user_name" />
@@ -45,7 +46,7 @@
             android:layout_marginLeft="8dp"
             android:id="@+id/user_gender"
             android:entries="@array/gender"
-            android:layout_alignBottom="@+id/textView"
+            android:layout_alignBottom="@+id/user_age"
             android:layout_toRightOf="@+id/textView"
             android:layout_toEndOf="@+id/textView" />
 
