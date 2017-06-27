@@ -98,7 +98,7 @@ public class AlarmReceiver extends BroadcastReceiver{
             str_dose = "1 tablet";
         }
 
-        notification_builder.setContentText(alarm_session+" Dosage: "+str_dose+" tablets.");
+        notification_builder.setContentText(alarm_session+" Dosage: "+str_dose);
 
 
         Intent notification_cancel_intent = new Intent(context, CancelReceiver.class);
