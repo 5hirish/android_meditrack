@@ -65,5 +65,6 @@
     <string name="noon">Noon</string>
     <string name="evening">Evening</string>
     <string name="total_dose_quantity">Total Dose Quantity:</string>
+    <string name="edit_user_details">Edit User Details</string>
 
 </resources>

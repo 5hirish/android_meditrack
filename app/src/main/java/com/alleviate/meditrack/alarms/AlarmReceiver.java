@@ -52,15 +52,16 @@ public class AlarmReceiver extends BroadcastReceiver{
         queryBuilder.setTables(SQLiteHelper.db_alarms +" INNER JOIN "+ SQLiteHelper.db_med_db +" ON "+SQLiteHelper.db_alarm_med_id+" = "+SQLiteHelper.db_med_id);
         Cursor cursor = queryBuilder.query(dbr, null, SQLiteHelper.db_alarms_id+" = ? ", new String[] { ""+alarm_id}, null, null, null);
 
-        String med_name = "", med_dose = "", alarm_freq = "", alarm_date = "", alarm_status = "", alarm_session = "";
+        String med_name = "", alarm_freq = "", alarm_date = "", alarm_status = "", alarm_session = "", str_dose = "";
         int med_id = 0;
+        double med_dose = 0;
 
         if(cursor != null){
             while (cursor.moveToNext()){
 
                 med_id = cursor.getInt(cursor.getColumnIndex(SQLiteHelper.db_med_id));
                 med_name = cursor.getString(cursor.getColumnIndex(SQLiteHelper.db_med_name));
-                med_dose = cursor.getString(cursor.getColumnIndex(SQLiteHelper.db_med_dose));
+                med_dose = cursor.getDouble(cursor.getColumnIndex(SQLiteHelper.db_med_dose));
 
 
                 alarm_freq = cursor.getString(cursor.getColumnIndex(SQLiteHelper.db_alarms_freq));
@@ -76,7 +77,23 @@ public class AlarmReceiver extends BroadcastReceiver{
         notification_builder.setTicker(med_name);
         notification_builder.setContentTitle(med_name);
 
-        notification_builder.setContentText(alarm_session+" Dosage: "+med_dose+" tablets.");
+        if (med_dose == 0.5) {
+            str_dose = "1/2 tablet";
+
+        } else if (med_dose == 1.0) {
+            str_dose = "1 tablet";
+
+        } else if (med_dose == 1.5) {
+            str_dose = "1 & 1/2 tablets";
+
+        } else if (med_dose == 2.0) {
+            str_dose = "2 tablets";
+
+        } else {
+            str_dose = "1 tablet";
+        }
+
+        notification_builder.setContentText(alarm_session+" Dosage: "+str_dose+" tablets.");
 
 
         Intent notification_cancel_intent = new Intent(context, CancelReceiver.class);

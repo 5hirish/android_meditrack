@@ -1,0 +1,91 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:id="@+id/title_bar"
+        android:src="@color/colorPrimaryDark"/>
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/title_bar"
+        android:layout_alignStart="@+id/title_bar"
+        android:layout_alignTop="@+id/title_bar"
+        android:layout_alignRight="@+id/title_bar"
+        android:layout_alignEnd="@+id/title_bar"
+        android:layout_alignBottom="@+id/title_bar"
+        android:layout_marginLeft="16dp"
+        android:layout_marginStart="16dp"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:gravity="start|center"
+        android:text="Title"
+        android:textColor="@android:color/white" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/user_name"
+        android:hint="Your Name"
+        android:layout_below="@+id/title_bar"
+        android:layout_marginTop="16dp"
+        android:layout_marginLeft="@dimen/dime16"
+        android:layout_marginRight="@dimen/dime16"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Gender: "
+        android:textSize="18sp"
+        android:id="@+id/textView"
+        android:layout_above="@+id/save_user"
+        android:layout_alignLeft="@+id/user_name"
+        android:layout_alignStart="@+id/user_name" />
+
+    <android.support.v7.widget.AppCompatSpinner
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="4dp"
+        android:id="@+id/user_gender"
+        android:entries="@array/gender"
+        android:layout_alignBottom="@+id/textView"
+        android:layout_toRightOf="@+id/textView"
+        android:layout_toEndOf="@+id/textView" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="Your Age"
+        android:id="@+id/user_age"
+        android:layout_marginTop="@dimen/dime16"
+        android:inputType="number"
+        android:layout_below="@+id/user_name"
+        android:layout_alignRight="@+id/user_name"
+        android:layout_alignEnd="@+id/user_name" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Save"
+        android:id="@+id/save_user"
+        android:layout_marginTop="@dimen/dime16"
+        android:layout_below="@+id/user_age"
+        android:layout_alignRight="@+id/user_age"
+        android:layout_alignEnd="@+id/user_age" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Cancel"
+        android:id="@+id/cancel"
+        android:layout_below="@+id/user_age"
+        android:layout_marginTop="@dimen/dime16"
+        android:layout_marginRight="@dimen/dime16"
+        android:layout_marginBottom="@dimen/dime16"
+        android:layout_toLeftOf="@+id/save_user"
+        android:layout_toStartOf="@+id/save_user" />
+
+    </RelativeLayout>
