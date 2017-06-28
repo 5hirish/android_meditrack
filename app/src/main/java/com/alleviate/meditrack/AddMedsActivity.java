@@ -532,7 +532,7 @@ public class AddMedsActivity extends AppCompatActivity {
 
         if (Build.VERSION.SDK_INT >= 19) {
 
-            alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, alarm_time.getTimeInMillis(), 0, alarm_pending_intent);
+            alarmManager.setExact(AlarmManager.RTC_WAKEUP, alarm_time.getTimeInMillis(), alarm_pending_intent);
 
         } else {
 

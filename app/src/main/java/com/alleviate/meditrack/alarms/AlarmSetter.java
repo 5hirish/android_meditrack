@@ -197,12 +197,13 @@ public class AlarmSetter extends BroadcastReceiver {
 
         if (Build.VERSION.SDK_INT >= 19) {
 
-            alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, alarm_time.getTimeInMillis(), 0, alarm_pending_intent);
+            alarmManager.setExact(AlarmManager.RTC_WAKEUP, alarm_time.getTimeInMillis(), alarm_pending_intent);
 
         } else {
 
             alarmManager.set(AlarmManager.RTC_WAKEUP, alarm_time.getTimeInMillis(), alarm_pending_intent);
         }
+
         Log.d("Medi:Alarm","Set Alarm : "+alarm_id+" at "+ alarm_time.getTime());
 
         if (Constants.debug_flag){

@@ -7,6 +7,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.util.Log;
 
 import com.alleviate.meditrack.alarms.AlarmSetter;
@@ -62,7 +63,14 @@ public class BootReceiver extends BroadcastReceiver{
         PendingIntent parent_pending_intent = PendingIntent.getBroadcast(context, parent_id, parent_intent, 0);
         AlarmManager parent_alarm = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
 
-        parent_alarm.setRepeating(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), AlarmManager.INTERVAL_DAY, parent_pending_intent);
+        if (Build.VERSION.SDK_INT >= 19) {
+
+            parent_alarm.setInexactRepeating(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), AlarmManager.INTERVAL_DAY, parent_pending_intent);
+
+        } else {
+
+            parent_alarm.setRepeating(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), AlarmManager.INTERVAL_DAY, parent_pending_intent);
+        }
 
         Log.d("Medi:ParentAlarm", "Parent Alarm Set After Boot Id " + parent_id);
 

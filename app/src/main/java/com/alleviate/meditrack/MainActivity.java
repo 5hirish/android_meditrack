@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.media.RingtoneManager;
 import android.net.Uri;
+import android.os.Build;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.TaskStackBuilder;
 import android.support.v7.app.AppCompatActivity;
@@ -139,7 +140,14 @@ public class MainActivity extends AppCompatActivity {
         PendingIntent parent_pending_intent = PendingIntent.getBroadcast(getApplicationContext(), parent_id, parent_intent, 0);
         AlarmManager parent_alarm = (AlarmManager)getApplicationContext().getSystemService(Context.ALARM_SERVICE);
 
-        parent_alarm.setInexactRepeating(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), AlarmManager.INTERVAL_DAY, parent_pending_intent);
+        if (Build.VERSION.SDK_INT >= 19) {
+
+            parent_alarm.setInexactRepeating(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), AlarmManager.INTERVAL_DAY, parent_pending_intent);
+
+        } else {
+
+            parent_alarm.setRepeating(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), AlarmManager.INTERVAL_DAY, parent_pending_intent);
+        }
 
         Log.d("Medi:ParentAlarm", "Parent Alarm Set Id " + parent_id);
         if (Constants.debug_flag) {
